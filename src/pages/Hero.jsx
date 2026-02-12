@@ -3,7 +3,7 @@ import cayman from '../assets/cayman.mp4'
 import img from '../assets/img.jpg'
 const Hero = () => {
     const [timeLeft, setTimeLeft] = useState({
-        days: '000',
+        days: '00',
         hours: '00',
         minutes: '00',
         seconds: '00',
@@ -18,7 +18,7 @@ const Hero = () => {
 
             if (distance < 0) {
                 clearInterval(interval);
-                setTimeLeft({ days: '000', hours: '00', minutes: '00', seconds: '00' });
+                setTimeLeft({ days: '00', hours: '00', minutes: '00', seconds: '00' });
             } else {
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -26,7 +26,7 @@ const Hero = () => {
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 setTimeLeft({
-                    days: String(days).padStart(3, '0'),
+                    days: String(days).padStart(2, '0'),
                     hours: String(hours).padStart(2, '0'),
                     minutes: String(minutes).padStart(2, '0'),
                     seconds: String(seconds).padStart(2, '0'),
@@ -59,11 +59,11 @@ const Hero = () => {
 
     return (
         <>
-            <section className=" mt-16 hero-section relative min-h-screen flex items-end justify-center overflow-hidden bg-blue-100">
+            <section className="mt-24 lg:mt-16 hero-section relative min-h-screen flex items-end justify-center overflow-hidden bg-blue-100">
                 {/* Video Background */}
                 <div className="absolute inset-0 w-full h-full">
                     <video
-                        className="w-full h-full border border-red-700 object-contain opacity-90"
+                        className="w-full h-full border border-red-700 object-cover lg:object-contain opacity-90"
                         autoPlay
                         muted
                         loop
@@ -95,7 +95,7 @@ const Hero = () => {
                             <div className="countdown-label text-[10px] md:text-xs lg:text-sm text-white/70 uppercase tracking-widest mt-1">Minutes</div>
                         </div>
                         <div className="countdown-separator text-2xl md:text-4xl lg:text-6xl text-white/50 font-light hidden md:block">:</div>
-                        <div className="countdown-item text-center hidden md:block">
+                        <div className="countdown-item text-center ">
                             <div className="countdown-value text-2xl md:text-4xl lg:text-6xl font-bold text-white" id="seconds">{timeLeft.seconds}</div>
                             <div className="countdown-label text-[10px] md:text-xs lg:text-sm text-white/70 uppercase tracking-widest mt-1">Seconds</div>
                         </div>
@@ -142,7 +142,7 @@ const Hero = () => {
                             Mall Of Cayman
                         </h2>
                         <p className=" leading-relaxed">
-                           The cost of living in Cayman is rising. Starting a physical store is expensive.
+                            The cost of living in Cayman is rising. Starting a physical store is expensive.
                         </p>
                         <p>So we built something different.</p>
                         <p>Mall of Cayman gives you a platform to launch your business online without the cost of storefront rent.</p>
