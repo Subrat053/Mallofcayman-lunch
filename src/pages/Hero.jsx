@@ -59,7 +59,7 @@ const Hero = () => {
 
     return (
         <>
-            <section className="mt-24 lg:mt-16 hero-section relative min-h-screen flex items-end justify-center overflow-hidden bg-blue-100">
+            <section className="mt-24 lg:mt-16 hero-section relative lg:min-h-[calc(100vh-56px)] min-h-[calc(100vh-96px)] flex items-end justify-center overflow-hidden bg-blue-100">
                 {/* Video Background */}
                 <div className="absolute inset-0 w-full h-full">
                     <video
@@ -68,7 +68,7 @@ const Hero = () => {
                         muted
                         loop
                         controls
-                        poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect fill='%23f5f5f5' width='1920' height='1080'/%3E%3C/svg%3E"
+                        // poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080'%3E%3Crect fill='%23f5f5f5' width='1920' height='1080'/%3E%3C/svg%3E"
                     >
                         <source src={cayman} type="video/mp4" />
                         Your browser does not support the video tag.
@@ -77,9 +77,9 @@ const Hero = () => {
                 </div>
 
                 {/* Hero Content */}
-                <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 text-center animate-on-scroll w-full">
+                <div className="relative bottom-8 z-10 max-w-7xl mx-auto px-6 pt-10 mb-10 text-center animate-on-scroll w-full">
                     {/* Countdown Timer */}
-                    <div className="countdown-container inline-flex items-center gap-2 md:gap-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-4 py-4 md:px-8 md:py-6 mb-8 shadow-2xl">
+                    <div className="countdown-container inline-flex items-center gap-2 md:gap-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl px-4 py-4 md:px-8 md:py-6 mb-4 lg:mb-8 shadow-2xl">
                         <div className="countdown-item text-center">
                             <div className="countdown-value text-2xl md:text-4xl lg:text-6xl font-bold text-white" id="days">{timeLeft.days}</div>
                             <div className="countdown-label text-[10px] md:text-xs lg:text-sm text-white/70 uppercase tracking-widest mt-1">Days</div>
@@ -94,17 +94,17 @@ const Hero = () => {
                             <div className="countdown-value text-2xl md:text-4xl lg:text-6xl font-bold text-white" id="minutes">{timeLeft.minutes}</div>
                             <div className="countdown-label text-[10px] md:text-xs lg:text-sm text-white/70 uppercase tracking-widest mt-1">Minutes</div>
                         </div>
-                        <div className="countdown-separator text-2xl md:text-4xl lg:text-6xl text-white/50 font-light hidden md:block">:</div>
+                        <div className="countdown-separator text-2xl md:text-4xl lg:text-6xl text-white/50 font-light">:</div>
                         <div className="countdown-item text-center ">
                             <div className="countdown-value text-2xl md:text-4xl lg:text-6xl font-bold text-white" id="seconds">{timeLeft.seconds}</div>
                             <div className="countdown-label text-[10px] md:text-xs lg:text-sm text-white/70 uppercase tracking-widest mt-1">Seconds</div>
                         </div>
                     </div>
 
-                    <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold text-white mb-6 leading-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold text-white mb-3 lg:mb-6 leading-tight">
                         Mall of Cayman
                     </h1>
-                    <p className="text-base md:text-lg lg:text-2xl text-white/90 max-w-3xl mx-auto mb-8 font-medium">
+                    <p className="text-sm md:text-lg lg:text-2xl text-white/90 max-w-3xl mx-auto mb-1 font-medium">
                         Where Cayman's Next Business Leaders Begin
                     </p>
                 </div>
