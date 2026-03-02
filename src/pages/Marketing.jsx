@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Marketing = () => {
+    const [daysLeft, setDaysLeft] = useState('00');
+
+    useEffect(() => {
+        const countDownDate = new Date('2026-04-01T00:00:00-05:00').getTime();
+        const updateDays = () => {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            if (distance < 0) {
+                setDaysLeft('00');
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                setDaysLeft(String(days).padStart(2, '0'));
+            }
+        };
+        updateDays();
+        const interval = setInterval(updateDays, 60 * 1000); // update every minute
+        return () => clearInterval(interval);
+    }, []);
     return (
         <>
             <section className="marketing-section py-12 md:py-20 lg:py-32 px-6 bg-gradient-to-br from-violet-100 via-purple-100 to-fuchsia-100 animate-on-scroll">
@@ -69,7 +87,7 @@ const Marketing = () => {
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <span id="urgency-days">000</span> days until launch
+                                <span id="urgency-days">{daysLeft}</span> days until launch
                             </div>
                         </div>
                     </div>
