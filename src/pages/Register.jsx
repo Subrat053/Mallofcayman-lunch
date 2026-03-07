@@ -28,15 +28,19 @@ const stripePromise = stripeKeyValid
   ? loadStripe(STRIPE_PUBLISHABLE_KEY)
   : null;
 
-const API_BASE = `${import.meta.env.BACKEND_URI}/api`;
-// const API_BASE = "http://localhost:5000/api";
+// const API_BASE =
+//   `${import.meta.env.BACKEND_URI}/api` || "http://localhost:5000/api";
+
+
+const API_BASE = "http://localhost:5000/api";
+ console.log("Using API base URL:", API_BASE);
 
 // ─── SUBSCRIPTION PLANS ──────────────────────────────────────────────────────
 const GOLD_PLAN = {
   id: "gold",
   name: "Gold",
   color: "from-yellow-400 to-yellow-600",
-  price: { monthly: 99, quarterly: 267.3, semiannual: 504.9, annual: 950.4 },
+  price: { monthly: 5, quarterly: 12.5, semiannual: 25.5, annual: 48 },
   features: [
     "Unlimited Products",
     "Business profile & logo",
