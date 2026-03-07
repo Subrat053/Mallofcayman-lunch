@@ -23,4 +23,5 @@ Backend-lunch
 *.njsproj
 *.sln
 *.sw?
+.env.*
 .env
