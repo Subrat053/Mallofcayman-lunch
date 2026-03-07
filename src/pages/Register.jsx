@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -140,9 +140,12 @@ const StripePaymentForm = ({
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 const Register = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [billingCycle, setBillingCycle] = useState("monthly");
+  const [billingCycle, setBillingCycle] = useState(
+    location.state?.billingCycle || "monthly",
+  );
   // Gold is the only plan – always pre-selected
   const [selectedPlan, setSelectedPlan] = useState("gold");
   const [visible, setVisible] = useState(false);
