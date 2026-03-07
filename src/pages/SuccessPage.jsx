@@ -65,6 +65,7 @@ const ConfettiCanvas = () => {
 const SuccessPage = () => {
   const { state } = useLocation();
   const shopName = state?.name || "Seller";
+  const shopEmail = state?.email || "";
   const plan = state?.selectedPlan || "";
   const billing = state?.billingCycle || "";
   const paymentFree = state?.paymentFree ?? false;
@@ -193,7 +194,14 @@ const SuccessPage = () => {
         </div>
 
         <p className="text-xs text-gray-400">
-          A confirmation email will be sent to your registered address shortly.
+          {shopEmail ? (
+            <>
+              A confirmation email has been sent to{" "}
+              <span className="font-semibold text-gray-600">{shopEmail}</span>.
+            </>
+          ) : (
+            "A confirmation email will be sent to your registered address shortly."
+          )}
         </p>
       </div>
     </div>

@@ -28,7 +28,8 @@ const stripePromise = stripeKeyValid
   ? loadStripe(STRIPE_PUBLISHABLE_KEY)
   : null;
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = `${import.meta.env.BACKEND_URI}/api`;
+// const API_BASE = "http://localhost:5000/api";
 
 // ─── SUBSCRIPTION PLANS ──────────────────────────────────────────────────────
 const GOLD_PLAN = {
@@ -381,6 +382,7 @@ const Register = () => {
         navigate("/success", {
           state: {
             name: formData.name,
+            email: formData.email,
             selectedPlan,
             billingCycle,
             paymentFree: !stripePaymentIntentId,
