@@ -154,6 +154,7 @@ const Register = () => {
   const [tradeLicenses, setTradeLicenses] = useState([]);
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoadingMap, setIsLoadingMap] = useState(false);
+  const [errors, setErrors] = useState({ name: "", email: "", password: "" });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -165,6 +166,12 @@ const Register = () => {
     password: "",
     latitude: "",
     longitude: "",
+    paypalEmail: "",
+    bankAccountName: "",
+    bankAccountNumber: "",
+    bankName: "",
+    ifscCode: "",
+    bankAccountType: "",
   });
 
   const addressInputRef = useRef(null);
@@ -259,35 +266,55 @@ const Register = () => {
   };
 
   // ── Handlers ─────────────────────────────────────────────────────────────
-  const handleInput = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
 
   const handleAvatar = (e) => setAvatar(e.target.files[0]);
 
   // ── Validation ────────────────────────────────────────────────────────────
   const validateStep1 = () => {
-    if (!formData.name.trim()) {
-      toast.error("Please enter shop name");
-      return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const newErrors = { name: "", email: "", password: "" };
+    let valid = true;
+
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      newErrors.name = "Shop name must be at least 2 characters";
+      valid = false;
     }
     if (!formData.email.trim()) {
-      toast.error("Please enter email");
-      return false;
+      newErrors.email = "Email address is required";
+      valid = false;
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = "Please enter a valid email address";
+      valid = false;
     }
-    if (!formData.password.trim()) {
-      toast.error("Please enter password");
-      return false;
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      valid = false;
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      valid = false;
     }
-    if (formData.password.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return false;
-    }
-    return true;
+
+    setErrors(newErrors);
+    return valid;
   };
 
   const validateStep2 = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.phoneNumber) {
       toast.error("Please enter phone number");
+      return false;
+    }
+    if (!formData.paypalEmail.trim()) {
+      toast.error("PayPal email is required to receive payments");
+      return false;
+    }
+    if (!emailRegex.test(formData.paypalEmail.trim())) {
+      toast.error("Please enter a valid PayPal email address");
       return false;
     }
     if (!formData.address.trim()) {
@@ -470,10 +497,14 @@ const Register = () => {
           name="name"
           value={formData.name}
           onChange={handleInput}
-          className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+          className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.name ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
           placeholder="Your shop name"
-          required
         />
+        {errors.name && (
+          <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.name}
+          </p>
+        )}
       </div>
 
       <div>
@@ -485,10 +516,14 @@ const Register = () => {
           name="email"
           value={formData.email}
           onChange={handleInput}
-          className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+          className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.email ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
           placeholder="shop@example.com"
-          required
         />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.email}
+          </p>
+        )}
       </div>
 
       <div>
@@ -501,9 +536,8 @@ const Register = () => {
             name="password"
             value={formData.password}
             onChange={handleInput}
-            className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+            className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.password ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
             placeholder="Minimum 6 characters"
-            required
           />
           <button
             type="button"
@@ -517,9 +551,15 @@ const Register = () => {
             )}
           </button>
         </div>
-        <p className="text-xs text-gray-500 mt-1">
-          Must be at least 6 characters
-        </p>
+        {errors.password ? (
+          <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+            <span>⚠</span> {errors.password}
+          </p>
+        ) : (
+          <p className="text-xs text-gray-500 mt-1">
+            Must be at least 6 characters
+          </p>
+        )}
       </div>
     </div>
   );
@@ -561,6 +601,134 @@ const Register = () => {
             placeholder="Tax registration number"
           />
         </div>
+      </div>
+
+      {/* PayPal Email Required */}
+      <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-xl p-4 shadow-sm">
+        <div className="flex items-start gap-3 mb-3">
+          <div className="flex-shrink-0 w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+            <span className="text-xl">💰</span>
+          </div>
+          <div>
+            <p className="font-bold text-yellow-900 text-lg">
+              PayPal Email Required
+            </p>
+            <p className="text-sm text-yellow-800 mt-1 leading-relaxed">
+              Customer payments will be sent <strong>directly</strong> to your
+              PayPal account. Without this, you won't receive any money from
+              sales!
+            </p>
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            PayPal Email <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            name="paypalEmail"
+            value={formData.paypalEmail}
+            onChange={handleInput}
+            className="w-full px-3 py-2.5 border-2 border-yellow-400 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white transition-all"
+            placeholder="your@paypal.com"
+          />
+          <p className="text-xs text-yellow-700 mt-2 flex items-center gap-1">
+            <span>✅</span> Money arrives instantly when customers buy your
+            products
+          </p>
+        </div>
+      </div>
+
+      {/* Bank Account Details (Optional) */}
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-3 mb-1">
+          <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+            <BsCreditCard className="w-5 h-5 text-blue-600" />
+          </div>
+          <p className="font-bold text-blue-900 text-lg">
+            Bank Account Details
+          </p>
+          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
+            Optional
+          </span>
+        </div>
+        <p className="text-sm text-blue-700 mb-4 ml-13">
+          Provide bank details for backup payment methods or future withdrawals
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Account Holder Name
+            </label>
+            <input
+              type="text"
+              name="bankAccountName"
+              value={formData.bankAccountName}
+              onChange={handleInput}
+              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              placeholder="John Doe"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Account Number
+            </label>
+            <input
+              type="text"
+              name="bankAccountNumber"
+              value={formData.bankAccountNumber}
+              onChange={handleInput}
+              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              placeholder="1234567890"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Bank Name
+            </label>
+            <input
+              type="text"
+              name="bankName"
+              value={formData.bankName}
+              onChange={handleInput}
+              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              placeholder="e.g. First Caribbean International Bank"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              IFSC / Routing Code
+            </label>
+            <input
+              type="text"
+              name="ifscCode"
+              value={formData.ifscCode}
+              onChange={handleInput}
+              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              placeholder="e.g. SBIN0001234"
+            />
+          </div>
+        </div>
+        <div className="mt-4">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Account Type
+          </label>
+          <select
+            name="bankAccountType"
+            value={formData.bankAccountType}
+            onChange={handleInput}
+            className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+          >
+            <option value="">Select type</option>
+            <option value="savings">Savings</option>
+            <option value="checking">Checking</option>
+            <option value="current">Current</option>
+          </select>
+        </div>
+        <p className="text-xs text-blue-600 mt-3 flex items-center gap-1">
+          <span>🏦</span> Bank details are optional but recommended for backup
+          payment methods
+        </p>
       </div>
 
       {/* Address */}
