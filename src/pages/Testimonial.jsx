@@ -32,346 +32,312 @@ const Testimonial = () => {
 
   return (
     <>
-      <section className="financial-comparison-section py-12 md:py-20 lg:py-32 px-6 bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-100 animate-on-scroll">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-center text-neutral-900 mb-10 md:mb-16">
-            The Numbers Don't Lie
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-10 md:mb-16">
-            {/* Traditional Store Cost */}
-            <div className="cost-card bg-white border-2 border-neutral-200 rounded-3xl p-6 md:p-8 lg:p-10 shadow-lg">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-red-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-neutral-900">
-                  Physical Store
-                </h3>
-              </div>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">Rent</span>
-                  <span className="font-bold text-neutral-900">US$2,250</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">Electricity</span>
-                  <span className="font-bold text-neutral-900">US$250</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">Water</span>
-                  <span className="font-bold text-neutral-900">US$75</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-neutral-200">
-                  <span className="text-neutral-600">
-                    1 Staff (Full Package)
-                  </span>
-                  <span className="font-bold text-neutral-900">US$2,250</span>
-                </div>
-              </div>
-
-              <div className="bg-red-50 rounded-2xl p-6 mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-semibold text-red-900 uppercase tracking-wide">
-                    Monthly Total
-                  </span>
-                  <span className="text-3xl font-bold text-red-600">
-                    US$4,825
-                  </span>
-                </div>
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-sm font-semibold text-red-900 uppercase tracking-wide">
-                    Annual Total
-                  </span>
-                  <span className="text-2xl font-bold text-red-600">
-                    US$57,900
-                  </span>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <p className="text-sm text-neutral-600 mb-1">
-                  Upfront Startup Cost:
-                </p>
-                <p className="text-2xl font-bold text-neutral-900">
-                  US$25,000 – US$30,000
-                </p>
-              </div>
+      <div className="font-sans antialiased text-gray-900 bg-white">
+        <section className="py-16 md:py-24 px-6 bg-gray-50 border-b border-gray-200">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-black uppercase tracking-tight mb-4">
+                The Numbers Don't Lie
+              </h2>
+              <div className="h-1 w-24 bg-red-600 mx-auto"></div>
             </div>
 
-            {/* Mall of Cayman Cost */}
-            <div className="cost-card bg-gradient-to-br from-blue-50 to-emerald-50 border-2 border-blue-200 rounded-3xl p-6 md:p-8 lg:p-10 shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-3xl"></div>
-
-              <div className="flex items-center gap-3 mb-6 relative z-10">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-neutral-900">
-                  Mall of Cayman
-                </h3>
-              </div>
-
-              <div className="space-y-4 mb-8 relative z-10">
-                <div className="flex justify-between items-center pb-3 border-b border-blue-200">
-                  <span className="text-neutral-700">Monthly Plan</span>
-                  <span className="font-bold text-blue-600">
-                    US$50 – US$160
-                  </span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-blue-200">
-                  <span className="text-neutral-700">
-                    Store Manager (Optional)
-                  </span>
-                  <span className="font-bold text-blue-600">US$100</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-blue-200">
-                  <span className="text-neutral-700">Electricity</span>
-                  <span className="font-bold text-emerald-600">US$0</span>
-                </div>
-                <div className="flex justify-between items-center pb-3">
-                  <span className="text-neutral-700 italic text-sm">
-                    All other costs
-                  </span>
-                  <span className="font-bold text-emerald-600">US$0</span>
-                </div>
-              </div>
-
-              <div className="bg-blue-600 rounded-2xl p-6 mb-6 relative z-10">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-semibold text-white uppercase tracking-wide">
-                    Monthly Total
-                  </span>
-                  <span className="text-3xl font-bold text-white">US$260</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-white uppercase tracking-wide">
-                    Annual Total
-                  </span>
-                  <span className="text-2xl font-bold text-white">
-                    US$3,120
-                  </span>
-                </div>
-                <p className="text-white/90 text-xs mt-3">
-                  Gold Plan (US$160/month) × 12 months + Store Manager
-                  (US$100/month) × 12 months
-                </p>
-              </div>
-
-              <div className="text-center relative z-10">
-                <p className="text-sm text-neutral-700 mb-1">
-                  Upfront Startup Cost:
-                </p>
-                <p className="text-2xl font-bold text-emerald-600">US$0</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Big Visual Statement */}
-          <div className="big-statement bg-gradient-to-r from-blue-600 to-emerald-600 rounded-3xl p-6 md:p-10 lg:p-16 text-center shadow-2xl">
-            <p className="text-xl md:text-2xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight">
-              One Full Year on Mall of Cayman Costs Less Than
-              <span className="block mt-4 text-2xl md:text-4xl lg:text-6xl">
-                65% of ONE MONTH
-              </span>
-              <span className="block mt-2 text-lg md:text-2xl lg:text-4xl text-white/90">
-                of a Traditional Store
-              </span>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="pricing-section py-12 md:py-20 lg:py-32 px-6 bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 animate-on-scroll">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold text-neutral-900 mb-6">
-              Choose Your Gold Plan
-            </h2>
-            <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto">
-              One plan. All features. Choose the billing period that works for
-              you — the longer you commit, the more you save.
-            </p>
-          </div>
-
-          <div className="max-w-2xl mx-auto">
-            {/* Billing cycle toggles */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-              {[
-                {
-                  value: "monthly",
-                  label: "1 Month",
-                  price: GOLD_PRICES.monthly,
-                  discount: null,
-                },
-                {
-                  value: "quarterly",
-                  label: "3 Months",
-                  price: GOLD_PRICES.quarterly,
-                  discount: "10%",
-                },
-                {
-                  value: "semiannual",
-                  label: "6 Months",
-                  price: GOLD_PRICES.semiannual,
-                  discount: "15%",
-                },
-                {
-                  value: "annual",
-                  label: "12 Months",
-                  price: GOLD_PRICES.annual,
-                  discount: "20%",
-                },
-              ].map((c) => (
-                <button
-                  key={c.value}
-                  type="button"
-                  onClick={() => setBillingCycle(c.value)}
-                  className={`relative flex flex-col items-center py-4 px-3 rounded-xl border-2 font-medium transition-all cursor-pointer ${
-                    billingCycle === c.value
-                      ? "border-yellow-500 bg-yellow-50 shadow-lg"
-                      : "border-gray-200 bg-white hover:border-yellow-300"
-                  }`}
-                >
-                  {c.discount && (
-                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-xs bg-green-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap">
-                      Save {c.discount}
-                    </span>
-                  )}
-                  <span
-                    className={`text-sm font-semibold ${
-                      billingCycle === c.value
-                        ? "text-yellow-700"
-                        : "text-gray-700"
-                    }`}
-                  >
-                    {c.label}
-                  </span>
-                  <span
-                    className={`text-xl font-bold mt-1 ${
-                      billingCycle === c.value
-                        ? "text-yellow-600"
-                        : "text-gray-900"
-                    }`}
-                  >
-                    ${c.price}
-                  </span>
-                  {billingCycle === c.value && (
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
+              {/* Traditional Store Cost */}
+              <div className="bg-white border border-gray-300 shadow-sm flex flex-col">
+                <div className="p-8 border-b border-gray-200 flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gray-100 border border-gray-300 flex items-center justify-center">
                     <svg
-                      className="w-4 h-4 text-yellow-600 mt-1"
+                      className="w-6 h-6 text-red-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        strokeLinecap="square"
+                        strokeLinejoin="miter"
                         strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                      ></path>
                     </svg>
-                  )}
-                </button>
-              ))}
-            </div>
-
-            {/* Single Gold plan feature card */}
-            <div className="relative p-6 rounded-2xl border-2 border-yellow-500 bg-yellow-50 shadow-xl">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-5 py-1 rounded-full text-xs font-bold tracking-wide whitespace-nowrap">
-                ✦ GOLD PLAN ✦
-              </div>
-              <div className="absolute top-4 right-4">
-                <svg
-                  className="w-7 h-7 text-yellow-500"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm-1 14.41V17a1 1 0 002 0v-.59A3.001 3.001 0 0012 11a1 1 0 110-2 3 3 0 013 3 3.001 3.001 0 01-1 2.24V15a1 1 0 01-2 0v-.59z" />
-                </svg>
-              </div>
-
-              <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center shadow-md">
-                  <span className="text-3xl">💎</span>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900">Gold</h3>
-                  <p className="text-gray-500 text-sm">
-                    Everything you need to grow
-                  </p>
-                </div>
-                <div className="ml-auto text-right">
-                  <span className="text-4xl font-extrabold text-gray-900">
-                    ${GOLD_PRICES[billingCycle]}
-                  </span>
-                  <span className="text-gray-500 text-sm block">
-                    /{billingLabel.toLowerCase()}
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-                {GOLD_FEATURES.map((f, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center text-gray-700 text-sm"
-                  >
-                    <svg
-                      className="w-4 h-4 text-yellow-600 mr-2 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    {f}
                   </div>
+                  <h3 className="text-2xl font-bold text-black uppercase tracking-wide">
+                    Physical Store
+                  </h3>
+                </div>
+
+                <div className="p-8 flex-grow space-y-4">
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Rent</span>
+                    <span className="font-bold text-black">US$2,250</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Electricity</span>
+                    <span className="font-bold text-black">US$250</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Water</span>
+                    <span className="font-bold text-black">US$75</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">1 Staff (Full Package)</span>
+                    <span className="font-bold text-black">US$2,250</span>
+                  </div>
+                </div>
+
+                <div className="bg-gray-100 p-8 border-t border-gray-300">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-sm font-bold text-gray-800 uppercase tracking-widest">
+                      Monthly Total
+                    </span>
+                    <span className="text-3xl font-extrabold text-red-600">
+                      US$4,825
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center pb-6 border-b border-gray-300">
+                    <span className="text-sm font-bold text-gray-800 uppercase tracking-widest">
+                      Annual Total
+                    </span>
+                    <span className="text-xl font-bold text-red-600">
+                      US$57,900
+                    </span>
+                  </div>
+                  <div className="mt-6 text-center">
+                    <p className="text-sm text-gray-500 uppercase tracking-widest mb-2">
+                      Upfront Startup Cost:
+                    </p>
+                    <p className="text-2xl font-bold text-black">
+                      US$25,000 – US$30,000
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mall of Cayman Cost */}
+              <div className="bg-white border-2 border-blue-800 shadow-lg flex flex-col relative">
+                <div className="absolute top-0 right-0 bg-blue-800 text-white text-xs font-bold px-4 py-1 uppercase tracking-widest">
+                  Our Solution
+                </div>
+                <div className="p-8 border-b border-gray-200 flex items-center gap-4">
+                  <div className="w-12 h-12 bg-blue-50 border border-blue-200 flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-blue-800"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="square"
+                        strokeLinejoin="miter"
+                        strokeWidth="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-blue-900 uppercase tracking-wide">
+                    Mall of Cayman
+                  </h3>
+                </div>
+
+                <div className="p-8 flex-grow space-y-4">
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Monthly Plan</span>
+                    <span className="font-bold text-black">US$50 – US$160</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Store Manager (Optional)</span>
+                    <span className="font-bold text-black">US$100</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-600">Electricity</span>
+                    <span className="font-bold text-black">US$0</span>
+                  </div>
+                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
+                    <span className="text-gray-500 italic">All other costs</span>
+                    <span className="font-bold text-black">US$0</span>
+                  </div>
+                </div>
+
+                <div className="bg-blue-900 p-8 text-white">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-sm font-bold text-blue-200 uppercase tracking-widest">
+                      Monthly Total
+                    </span>
+                    <span className="text-3xl font-extrabold text-white">
+                      US$260
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center pb-6 border-b border-blue-800">
+                    <span className="text-sm font-bold text-blue-200 uppercase tracking-widest">
+                      Annual Total
+                    </span>
+                    <span className="text-xl font-bold text-white">
+                      US$3,120
+                    </span>
+                  </div>
+                  <p className="text-blue-300 text-xs mt-4 mb-6 leading-relaxed">
+                    Gold Plan (US$160/month) × 12 months + Store Manager
+                    (US$100/month) × 12 months
+                  </p>
+                  <div className="mt-6 text-center border-t border-blue-800 pt-6">
+                    <p className="text-sm text-blue-200 uppercase tracking-widest mb-2">
+                      Upfront Startup Cost:
+                    </p>
+                    <p className="text-2xl font-bold text-white">US$0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Big Visual Statement */}
+            <div className="bg-black border border-gray-800 p-8 md:p-16 text-center shadow-xl">
+              <p className="text-xl md:text-3xl lg:text-4xl font-light text-white leading-tight uppercase tracking-wide">
+                One Full Year on Mall of Cayman Costs Less Than
+                <span className="block mt-6 mb-4 text-3xl md:text-5xl lg:text-7xl font-extrabold text-red-600 tracking-tight">
+                  65% of ONE MONTH
+                </span>
+                <span className="block text-lg md:text-2xl text-gray-400">
+                  of a Traditional Store
+                </span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section className="py-16 md:py-24 px-6 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-black uppercase tracking-tight mb-4">
+                Choose Your Gold Plan
+              </h2>
+              <div className="h-1 w-24 bg-blue-800 mx-auto mb-6"></div>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                One plan. All features. Choose the billing period that works for
+                you — the longer you commit, the more you save.
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              {/* Billing cycle toggles */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                {[
+                  {
+                    value: "monthly",
+                    label: "1 Month",
+                    price: GOLD_PRICES.monthly,
+                    discount: null,
+                  },
+                  {
+                    value: "quarterly",
+                    label: "3 Months",
+                    price: GOLD_PRICES.quarterly,
+                    discount: "10%",
+                  },
+                  {
+                    value: "semiannual",
+                    label: "6 Months",
+                    price: GOLD_PRICES.semiannual,
+                    discount: "15%",
+                  },
+                  {
+                    value: "annual",
+                    label: "12 Months",
+                    price: GOLD_PRICES.annual,
+                    discount: "20%",
+                  },
+                ].map((c) => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    onClick={() => setBillingCycle(c.value)}
+                    className={`relative flex flex-col items-center justify-center p-6 border-2 transition-all cursor-pointer ${billingCycle === c.value
+                        ? "border-black bg-black text-white"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-400"
+                      }`}
+                  >
+                    {c.discount && (
+                      <span className="absolute -top-3 right-[-10px] md:right-auto md:left-1/2 md:-translate-x-1/2 text-xs bg-red-600 text-white px-3 py-1 font-bold uppercase tracking-widest shadow-sm">
+                        Save {c.discount}
+                      </span>
+                    )}
+                    <span
+                      className={`text-sm font-bold uppercase tracking-widest mb-2 ${billingCycle === c.value ? "text-gray-300" : "text-gray-500"
+                        }`}
+                    >
+                      {c.label}
+                    </span>
+                    <span className="text-2xl font-extrabold tracking-tight">
+                      ${c.price}
+                    </span>
+                  </button>
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={() =>
-                  navigate("/register", { state: { billingCycle } })
-                }
-                className="block w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-white font-bold text-center py-4 rounded-full transition-all duration-300 hover:shadow-lg cursor-pointer"
-              >
-                Get Started — ${GOLD_PRICES[billingCycle]}
-              </button>
+              {/* Single Gold plan feature card */}
+              <div className="max-w-lg mx-auto bg-white border border-gray-300 shadow-2xl relative overflow-hidden">
+                <div className="bg-blue-900 text-white text-center py-8 px-6 border-b-4 border-black relative">
+                  <svg
+                    className="w-8 h-8 mx-auto mb-4 text-white opacity-80"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  <h3 className="text-3xl font-extrabold uppercase tracking-widest mb-2">
+                    Gold Plan
+                  </h3>
+                  <p className="text-blue-200 text-sm tracking-wide">
+                    Everything you need to grow
+                  </p>
+                </div>
+
+                <div className="p-8 md:p-12">
+                  <div className="text-center mb-10 pb-10 border-b border-gray-200">
+                    <span className="text-6xl font-extrabold text-black tracking-tight">
+                      ${GOLD_PRICES[billingCycle]}
+                    </span>
+                    <span className="text-gray-500 font-bold uppercase tracking-widest block mt-2">
+                      / {billingLabel.toLowerCase()}
+                    </span>
+                  </div>
+
+                  <div className="space-y-4 mb-10">
+                    {GOLD_FEATURES.map((f, i) => (
+                      <div key={i} className="flex items-center text-black font-medium">
+                        <svg
+                          className="w-5 h-5 text-blue-800 mr-4 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="square"
+                            strokeLinejoin="miter"
+                            strokeWidth="3"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        {f}
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate("/register", { state: { billingCycle } })
+                    }
+                    className="w-full bg-black hover:bg-gray-800 text-white font-extrabold uppercase tracking-widest text-center py-5 transition-colors cursor-pointer"
+                  >
+                    Get Started — ${GOLD_PRICES[billingCycle]}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 };

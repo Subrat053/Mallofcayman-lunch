@@ -130,9 +130,6 @@ const StripePaymentForm = ({
       <p className="text-center text-xs text-gray-500">
         🔒 Payments are secure and encrypted via Stripe
       </p>
-      <p className="text-center text-xs text-blue-600 font-medium">
-        Test card: 4242 4242 4242 4242 · Any future date · Any CVC
-      </p>
     </form>
   );
 };
