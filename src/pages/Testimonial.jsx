@@ -88,7 +88,7 @@ const Testimonial = () => {
 
               {/* Mall of Cayman Card */}
               <div className="bg-white rounded-2xl border-2 border-indigo-500 shadow-lg overflow-hidden flex flex-col relative">
-                <div className="absolute -top-1 left-28 lg:top-4 lg:right-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                <div className="absolute -top-1 left-28 lg:-top-1 lg:left-52 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
                   Our Solution
                 </div>
                 <div className="px-7 py-5 border-b border-slate-100 flex items-center gap-4 bg-indigo-50">
@@ -101,7 +101,7 @@ const Testimonial = () => {
                 </div>
                 <div className="px-7 py-5 flex-grow space-y-0">
                   {[
-                    { label: "Monthly Plan", value: "US$50 â€“ US$160" },
+                    { label: "Monthly Plan", value: "US$50 - US$160" },
                     { label: "Store Manager (Optional)", value: "US$100" },
                     { label: "Electricity", value: "US$0" },
                     { label: "All other costs", value: "US$0", italic: true },
@@ -159,7 +159,8 @@ const Testimonial = () => {
               </h2>
               <div className="w-16 h-1 bg-indigo-600 mx-auto rounded-full mb-5"></div>
               <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                One plan. All features. Choose the billing period that works for you â€” the longer you commit, the more you save.
+                One plan. All features. Choose the billing period that works for you. The longer you commit, the more you save.
+              
               </p>
             </div>
 
