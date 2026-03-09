@@ -95,7 +95,7 @@ const StripePaymentForm = ({
 
   return (
     <form onSubmit={handlePay} className="space-y-5">
-      <div className="p-4 border-2 border-gray-200 rounded-xl bg-white focus-within:border-blue-400 transition-colors">
+      <div className="p-4 border-2 border-slate-200 rounded-xl bg-white focus-within:border-indigo-400 transition-colors">
         <CardElement
           options={{
             style: {
@@ -116,7 +116,7 @@ const StripePaymentForm = ({
       <button
         type="submit"
         disabled={!stripe || isLoading}
-        className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3 bg-indigo-700 hover:bg-indigo-800 text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
       >
         {isLoading ? (
           <span className="flex items-center justify-center gap-2">
@@ -127,7 +127,7 @@ const StripePaymentForm = ({
           "Pay Now & Register"
         )}
       </button>
-      <p className="text-center text-xs text-gray-500">
+      <p className="text-center text-xs text-slate-500">
         🔒 Payments are secure and encrypted via Stripe
       </p>
     </form>
@@ -451,7 +451,7 @@ const Register = () => {
   // ─────────────────────────────────────────────────────────────────────────
   const renderStep1 = () => (
     <div className="space-y-5">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      <h2 className="text-xl font-bold text-slate-800 mb-4">
         Basic Information
       </h2>
 
@@ -462,16 +462,16 @@ const Register = () => {
             <img
               src={URL.createObjectURL(avatar)}
               alt="avatar"
-              className="w-32 h-32 rounded-full object-cover border-4 border-blue-200"
+              className="w-32 h-32 rounded-full object-cover border-4 border-slate-200"
             />
           ) : (
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center border-4 border-blue-200">
-              <span className="text-4xl text-gray-400">🏪</span>
+            <div className="w-32 h-32 rounded-full bg-slate-100 flex items-center justify-center border-4 border-slate-200">
+              <span className="text-4xl text-slate-400">🏪</span>
             </div>
           )}
           <label
             htmlFor="avatar-input"
-            className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full cursor-pointer hover:bg-blue-700 transition-colors shadow-lg"
+            className="absolute bottom-0 right-0 bg-indigo-700 text-white p-2 rounded-full cursor-pointer hover:bg-indigo-800 transition-colors shadow-lg"
           >
             <HiOutlineCamera className="w-5 h-5" />
           </label>
@@ -486,7 +486,7 @@ const Register = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-slate-700 mb-2">
           Shop Name <span className="text-red-500">*</span>
         </label>
         <input
@@ -494,7 +494,7 @@ const Register = () => {
           name="name"
           value={formData.name}
           onChange={handleInput}
-          className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.name ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
+          className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 bg-white transition-all ${errors.name ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-slate-300 focus:ring-indigo-500 focus:border-indigo-500"}`}
           placeholder="Your shop name"
         />
         {errors.name && (
@@ -505,7 +505,7 @@ const Register = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-slate-700 mb-2">
           Email Address <span className="text-red-500">*</span>
         </label>
         <input
@@ -513,7 +513,7 @@ const Register = () => {
           name="email"
           value={formData.email}
           onChange={handleInput}
-          className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.email ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
+          className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 bg-white transition-all ${errors.email ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-slate-300 focus:ring-indigo-500 focus:border-indigo-500"}`}
           placeholder="shop@example.com"
         />
         {errors.email && (
@@ -524,7 +524,7 @@ const Register = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="block text-sm font-semibold text-slate-700 mb-2">
           Password <span className="text-red-500">*</span>
         </label>
         <div className="relative">
@@ -533,13 +533,13 @@ const Register = () => {
             name="password"
             value={formData.password}
             onChange={handleInput}
-            className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 bg-gray-50 focus:bg-white transition-all ${errors.password ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-gray-200 focus:ring-purple-500 focus:border-purple-500"}`}
+            className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 bg-white transition-all ${errors.password ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-slate-300 focus:ring-indigo-500 focus:border-indigo-500"}`}
             placeholder="Minimum 6 characters"
           />
           <button
             type="button"
             onClick={() => setVisible(!visible)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
           >
             {visible ? (
               <AiOutlineEye className="w-5 h-5" />
@@ -553,7 +553,7 @@ const Register = () => {
             <span>⚠</span> {errors.password}
           </p>
         ) : (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Must be at least 6 characters
           </p>
         )}
@@ -566,13 +566,13 @@ const Register = () => {
   // ─────────────────────────────────────────────────────────────────────────
   const renderStep2 = () => (
     <div className="space-y-5">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+      <h2 className="text-xl font-bold text-slate-800 mb-4">
         Business Details
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Phone Number <span className="text-red-500">*</span>
           </label>
           <input
@@ -580,30 +580,30 @@ const Register = () => {
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleInput}
-            className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
             placeholder="+1 345 000 0000"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            GST / Tax Number <span className="text-gray-400">(Optional)</span>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
+            GST / Tax Number <span className="text-slate-400">(Optional)</span>
           </label>
           <input
             type="text"
             name="gstNumber"
             value={formData.gstNumber}
             onChange={handleInput}
-            className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
             placeholder="Tax registration number"
           />
         </div>
       </div>
 
       {/* PayPal Email Required */}
-      <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-xl p-4 shadow-sm">
+      <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 shadow-sm">
         <div className="flex items-start gap-3 mb-3">
-          <div className="flex-shrink-0 w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
             <span className="text-xl">💰</span>
           </div>
           <div>
@@ -618,7 +618,7 @@ const Register = () => {
           </div>
         </div>
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             PayPal Email <span className="text-red-500">*</span>
           </label>
           <input
@@ -626,7 +626,7 @@ const Register = () => {
             name="paypalEmail"
             value={formData.paypalEmail}
             onChange={handleInput}
-            className="w-full px-3 py-2.5 border-2 border-yellow-400 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 bg-white transition-all"
+            className="w-full px-3 py-2.5 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-white transition-all"
             placeholder="your@paypal.com"
           />
           <p className="text-xs text-yellow-700 mt-2 flex items-center gap-1">
@@ -637,24 +637,24 @@ const Register = () => {
       </div>
 
       {/* Bank Account Details (Optional) */}
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 shadow-sm">
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 shadow-sm">
         <div className="flex items-center gap-3 mb-1">
-          <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-            <BsCreditCard className="w-5 h-5 text-blue-600" />
+          <div className="flex-shrink-0 w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+            <BsCreditCard className="w-5 h-5 text-indigo-600" />
           </div>
-          <p className="font-bold text-blue-900 text-lg">
+          <p className="font-bold text-slate-900 text-lg">
             Bank Account Details
           </p>
-          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">
+          <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-medium">
             Optional
           </span>
         </div>
-        <p className="text-sm text-blue-700 mb-4 ml-13">
+        <p className="text-sm text-slate-600 mb-4 ml-13">
           Provide bank details for backup payment methods or future withdrawals
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Account Holder Name
             </label>
             <input
@@ -662,12 +662,12 @@ const Register = () => {
               name="bankAccountName"
               value={formData.bankAccountName}
               onChange={handleInput}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
               placeholder="John Doe"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Account Number
             </label>
             <input
@@ -675,12 +675,12 @@ const Register = () => {
               name="bankAccountNumber"
               value={formData.bankAccountNumber}
               onChange={handleInput}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
               placeholder="1234567890"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               Bank Name
             </label>
             <input
@@ -688,12 +688,12 @@ const Register = () => {
               name="bankName"
               value={formData.bankName}
               onChange={handleInput}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
               placeholder="e.g. First Caribbean International Bank"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">
               IFSC / Routing Code
             </label>
             <input
@@ -701,20 +701,20 @@ const Register = () => {
               name="ifscCode"
               value={formData.ifscCode}
               onChange={handleInput}
-              className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+              className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
               placeholder="e.g. SBIN0001234"
             />
           </div>
         </div>
         <div className="mt-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
             Account Type
           </label>
           <select
             name="bankAccountType"
             value={formData.bankAccountType}
             onChange={handleInput}
-            className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white transition-all"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
           >
             <option value="">Select type</option>
             <option value="savings">Savings</option>
@@ -722,7 +722,7 @@ const Register = () => {
             <option value="current">Current</option>
           </select>
         </div>
-        <p className="text-xs text-blue-600 mt-3 flex items-center gap-1">
+        <p className="text-xs text-indigo-600 mt-3 flex items-center gap-1">
           <span>🏦</span> Bank details are optional but recommended for backup
           payment methods
         </p>
@@ -730,7 +730,7 @@ const Register = () => {
 
       {/* Address */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           <FiMapPin className="inline mr-1" />
           Address <span className="text-red-500">*</span>
         </label>
@@ -741,7 +741,7 @@ const Register = () => {
             name="address"
             value={formData.address}
             onChange={handleInput}
-            className="flex-1 px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+            className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
             placeholder="Start typing your address…"
             required
           />
@@ -749,7 +749,7 @@ const Register = () => {
             type="button"
             onClick={getCurrentLocation}
             disabled={isLoadingMap}
-            className="px-3 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+            className="px-3 py-2.5 bg-indigo-700 text-white rounded-lg hover:bg-indigo-800 transition-colors disabled:opacity-50"
             title="Use my current location"
           >
             {isLoadingMap ? (
@@ -768,7 +768,7 @@ const Register = () => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-slate-700 mb-2">
           Zip / Postal Code <span className="text-red-500">*</span>
         </label>
         <input
@@ -776,7 +776,7 @@ const Register = () => {
           name="zipCode"
           value={formData.zipCode}
           onChange={handleInput}
-          className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-gray-50 focus:bg-white transition-all"
+          className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
           placeholder="KY1-1100"
           required
         />
@@ -850,13 +850,13 @@ const Register = () => {
 
         {tradeLicenses.length > 0 && (
           <div className="mt-3 space-y-2">
-            <p className="text-sm font-medium text-gray-700">
+            <p className="text-sm font-medium text-slate-700">
               Uploaded ({tradeLicenses.length}/5):
             </p>
             {tradeLicenses.map((file, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-gray-200"
+                className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-slate-200"
               >
                 <div className="flex items-center gap-2">
                   {file.type === "application/pdf" ? (
@@ -871,10 +871,10 @@ const Register = () => {
                     />
                   )}
                   <div>
-                    <p className="text-sm font-medium text-gray-800 max-w-[180px] truncate">
+                    <p className="text-sm font-medium text-slate-800 max-w-[180px] truncate">
                       {file.name}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       {(file.size / 1024).toFixed(1)} KB
                     </p>
                   </div>
@@ -914,8 +914,8 @@ const Register = () => {
   const renderStep3 = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-gray-800">Gold Plan</h2>
-        <p className="text-gray-500 mt-1">Choose your billing period</p>
+        <h2 className="text-2xl font-bold text-slate-800">Gold Plan</h2>
+        <p className="text-slate-500 mt-1">Choose your billing period</p>
       </div>
 
       {/* Billing cycle selector */}
@@ -952,8 +952,8 @@ const Register = () => {
             onClick={() => setBillingCycle(c.value)}
             className={`relative flex flex-col items-center py-4 px-3 rounded-xl border-2 font-medium transition-all ${
               billingCycle === c.value
-                ? "border-yellow-500 bg-yellow-50 shadow-lg"
-                : "border-gray-200 bg-white hover:border-yellow-300"
+                ? "border-indigo-600 bg-indigo-600 text-white shadow-lg"
+                : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300"
             }`}
           >
             {c.discount && (
@@ -962,48 +962,44 @@ const Register = () => {
               </span>
             )}
             <span
-              className={`text-sm font-semibold ${
-                billingCycle === c.value ? "text-yellow-700" : "text-gray-700"
-              }`}
+              className="text-sm font-semibold"
             >
               {c.label}
             </span>
             <span
-              className={`text-xl font-bold mt-1 ${
-                billingCycle === c.value ? "text-yellow-600" : "text-gray-900"
-              }`}
+              className="text-xl font-bold mt-1"
             >
               ${c.price}
             </span>
             {billingCycle === c.value && (
-              <FiCheck className="w-4 h-4 text-yellow-600 mt-1" />
+              <FiCheck className="w-4 h-4 text-white mt-1" />
             )}
           </button>
         ))}
       </div>
 
       {/* Single Gold plan card */}
-      <div className="relative p-6 rounded-2xl border-2 border-yellow-500 bg-yellow-50 shadow-xl">
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-5 py-1 rounded-full text-xs font-bold tracking-wide">
+      <div className="relative p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 shadow-md">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-700 text-white px-5 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
           ✦ GOLD PLAN ✦
         </div>
         <div className="absolute top-4 right-4">
-          <BsCheckCircle className="w-7 h-7 text-yellow-600" />
+          <BsCheckCircle className="w-6 h-6 text-indigo-600" />
         </div>
 
         <div className="flex items-center gap-4 mb-5">
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center shadow-md">
-            <span className="text-3xl">💎</span>
+          <div className="w-12 h-12 rounded-xl bg-indigo-700 flex items-center justify-center shadow-md">
+            <span className="text-2xl">💎</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">Gold</h3>
-            <p className="text-gray-500 text-sm">Everything you need to grow</p>
+            <h3 className="text-xl font-extrabold text-slate-900">Gold</h3>
+            <p className="text-slate-500 text-sm">Everything you need to grow</p>
           </div>
           <div className="ml-auto text-right">
-            <span className="text-4xl font-extrabold text-gray-900">
+            <span className="text-3xl font-extrabold text-slate-900">
               ${GOLD_PLAN.price[billingCycle]}
             </span>
-            <span className="text-gray-500 text-sm block">
+            <span className="text-slate-400 text-sm block">
               /{billingLabel().toLowerCase()}
             </span>
           </div>
@@ -1011,8 +1007,8 @@ const Register = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {GOLD_PLAN.features.map((f, i) => (
-            <div key={i} className="flex items-center text-gray-700 text-sm">
-              <FiCheck className="w-4 h-4 text-yellow-600 mr-2 flex-shrink-0" />
+            <div key={i} className="flex items-center text-slate-700 text-sm">
+              <FiCheck className="w-4 h-4 text-indigo-600 mr-2 flex-shrink-0" />
               {f}
             </div>
           ))}
@@ -1031,26 +1027,26 @@ const Register = () => {
     return (
       <div className="space-y-6">
         {/* Order summary */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5">
-          <h3 className="font-semibold text-gray-800 mb-4">Order Summary</h3>
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+          <h3 className="font-semibold text-slate-800 mb-4">Order Summary</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-600">Shop Name</span>
+              <span className="text-slate-600">Shop Name</span>
               <span className="font-medium">{formData.name}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Plan</span>
+              <span className="text-slate-600">Plan</span>
               <span className="font-medium">
                 {PLANS.find((p) => p.id === selectedPlan)?.name}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-600">Billing</span>
+              <span className="text-slate-600">Billing</span>
               <span className="font-medium">{billingLabel()}</span>
             </div>
             <div className="border-t pt-3 mt-2 flex justify-between">
-              <span className="font-semibold text-gray-800">Total</span>
-              <span className="text-2xl font-bold text-gray-900">
+              <span className="font-semibold text-slate-800">Total</span>
+              <span className="text-2xl font-bold text-slate-900">
                 {isFree ? "Free" : `$${price}`}
               </span>
             </div>
@@ -1060,16 +1056,16 @@ const Register = () => {
         {isFree ? (
           /* Revenue-share – no payment needed */
           <div className="space-y-4">
-            <div className="bg-purple-50 border border-purple-200 rounded-xl p-5">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-purple-600 flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl">
                   🚀
                 </div>
                 <div>
-                  <p className="font-bold text-purple-900">
+                  <p className="font-bold text-slate-900">
                     Revenue Share Plan – No Upfront Cost!
                   </p>
-                  <p className="text-sm text-purple-700">
+                  <p className="text-sm text-slate-600">
                     You pay 10% commission only when you earn.
                   </p>
                 </div>
@@ -1078,7 +1074,7 @@ const Register = () => {
             <button
               onClick={handleFreeSubmit}
               disabled={isLoading}
-              className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
             >
               {isLoading
                 ? "Creating your account…"
@@ -1087,9 +1083,9 @@ const Register = () => {
           </div>
         ) : clientSecret && stripeKeyValid ? (
           /* Stripe Payment */
-          <div className="bg-white border border-gray-200 rounded-xl p-5">
-            <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <BsCreditCard className="text-blue-600" /> Secure Payment –
+          <div className="bg-white border border-slate-200 rounded-xl p-5">
+            <h3 className="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+              <BsCreditCard className="text-indigo-600" /> Secure Payment –
               Powered by Stripe
             </h3>
             <Elements stripe={stripePromise}>
@@ -1160,11 +1156,11 @@ const Register = () => {
           </div>
         ) : (
           <div className="flex justify-center py-10">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500" />
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-500" />
           </div>
         )}
 
-        <div className="text-center text-xs text-gray-500">
+        <div className="text-center text-xs text-slate-500">
           <p>💰 100% refund guaranteed if your shop is not approved by admin</p>
         </div>
       </div>
@@ -1201,58 +1197,58 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-100 py-8 px-4 sm:px-6 lg:px-8">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1 tracking-tight">
             Start Your Seller Journey
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm sm:text-base text-slate-500">
             Join thousands of successful sellers on Mall of Cayman
           </p>
         </div>
 
         {/* Progress Steps */}
-        <div className="mb-6 bg-white rounded-xl shadow-sm p-4">
+        <div className="mb-6 bg-white rounded-2xl shadow-sm p-5 border border-slate-200">
           <div className="flex items-center justify-between relative">
             {/* Track */}
             <div
-              className="absolute top-6 h-1 bg-gray-200"
+              className="absolute top-5 h-0.5 bg-slate-200"
               style={{
-                left: "calc(24px)",
-                right: "calc(24px)",
-                width: "calc(100% - 48px)",
+                left: "calc(20px)",
+                right: "calc(20px)",
+                width: "calc(100% - 40px)",
               }}
             />
             {/* Fill */}
             <div
-              className="absolute top-6 h-1 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500"
+              className="absolute top-5 h-0.5 bg-indigo-600 transition-all duration-500"
               style={{
-                left: "calc(24px)",
-                width: `calc(${((currentStep - 1) / 3) * 100}% - 48px)`,
+                left: "calc(20px)",
+                width: `calc(${((currentStep - 1) / 3) * 100}% - 40px)`,
               }}
             />
 
             {stepMeta.map((s) => (
               <div key={s.num} className="flex flex-col items-center z-10">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
                     currentStep >= s.num
-                      ? "bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg scale-110"
-                      : "bg-white border-2 border-gray-300 text-gray-400"
+                      ? "bg-indigo-700 text-white shadow-md"
+                      : "bg-white border-2 border-slate-300 text-slate-400"
                   }`}
                 >
                   {currentStep > s.num ? (
-                    <FiCheck className="w-6 h-6" />
+                    <FiCheck className="w-5 h-5" />
                   ) : (
-                    <span className="text-lg">{s.icon}</span>
+                    <span className="text-base">{s.icon}</span>
                   )}
                 </div>
                 <span
-                  className={`text-xs sm:text-sm mt-2 font-medium hidden sm:block ${
-                    currentStep >= s.num ? "text-blue-600" : "text-gray-500"
+                  className={`text-xs sm:text-sm mt-2 font-semibold hidden sm:block ${
+                    currentStep >= s.num ? "text-indigo-700" : "text-slate-400"
                   }`}
                 >
                   {s.label}
@@ -1263,13 +1259,13 @@ const Register = () => {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-          {/* Gradient Header */}
-          <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-4 text-white">
-            <h2 className="text-xl sm:text-2xl font-bold">
+        <div className="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+          {/* Header */}
+          <div className="bg-indigo-700 px-6 py-5 text-white">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
               {headerTitles[currentStep - 1]}
             </h2>
-            <p className="mt-1 text-blue-50 text-xs sm:text-sm">
+            <p className="mt-1 text-indigo-200 text-xs sm:text-sm">
               {headerSubs[currentStep - 1]}
             </p>
           </div>
@@ -1278,11 +1274,11 @@ const Register = () => {
           <div className="p-5 sm:p-6">{renderStep()}</div>
 
           {/* Navigation */}
-          <div className="flex justify-between items-center px-5 sm:px-6 py-4 bg-gray-50 border-t border-gray-200">
+          <div className="flex justify-between items-center px-5 sm:px-6 py-4 bg-slate-50 border-t border-slate-200">
             {currentStep > 1 ? (
               <button
                 onClick={prevStep}
-                className="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium shadow-sm"
+                className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 hover:border-slate-400 transition-all font-medium shadow-sm"
               >
                 <FiArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">Previous</span>
@@ -1296,7 +1292,7 @@ const Register = () => {
               <button
                 onClick={nextStep}
                 disabled={currentStep === 3 && isLoading}
-                className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-2.5 bg-indigo-700 hover:bg-indigo-800 text-white rounded-lg transition-all font-semibold shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>
                   {currentStep === 3 && isLoading ? "Loading…" : "Continue"}
@@ -1310,21 +1306,21 @@ const Register = () => {
         </div>
 
         {/* Footer */}
-        <div className="mt-6 text-center bg-white rounded-xl shadow-sm p-4">
-          <p className="text-gray-600 text-sm">
+        <div className="mt-6 text-center bg-white rounded-2xl shadow-sm p-5 border border-slate-200">
+          <p className="text-slate-600 text-sm">
             Already have a seller account?{" "}
             <Link
               to="/"
-              className="text-blue-600 hover:text-blue-700 font-semibold hover:underline transition-colors"
+              className="text-indigo-700 hover:text-indigo-800 font-semibold hover:underline transition-colors"
             >
               Back to Home →
             </Link>
           </p>
-          <p className="text-gray-500 text-xs mt-2">
+          <p className="text-slate-400 text-xs mt-2">
             Need help? Contact us at{" "}
             <a
               href="mailto:info@mallofcayman.com"
-              className="text-blue-600 hover:underline"
+              className="text-indigo-600 hover:underline"
             >
               info@mallofcayman.com
             </a>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const GOLD_PRICES = {
@@ -32,157 +32,100 @@ const Testimonial = () => {
 
   return (
     <>
-      <div className="font-sans antialiased text-gray-900 bg-white">
-        <section className="py-16 md:py-24 px-6 bg-gray-50 border-b border-gray-200">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-black uppercase tracking-tight mb-4">
+      <div className="font-sans antialiased text-slate-900 bg-white">
+        {/* Cost Comparison Section */}
+        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-14">
+              <span className="inline-block bg-red-100 text-red-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
+                Cost Comparison
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
                 The Numbers Don't Lie
               </h2>
-              <div className="h-1 w-24 bg-red-600 mx-auto"></div>
+              <div className="w-16 h-1 bg-amber-500 mx-auto rounded-full"></div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
-              {/* Traditional Store Cost */}
-              <div className="bg-white border border-gray-300 shadow-sm flex flex-col">
-                <div className="p-8 border-b border-gray-200 flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gray-100 border border-gray-300 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-red-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="square"
-                        strokeLinejoin="miter"
-                        strokeWidth="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                      ></path>
+            <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10">
+              {/* Physical Store Card */}
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                <div className="px-7 py-5 border-b border-slate-100 flex items-center gap-4 bg-red-50">
+                  <div className="w-11 h-11 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-black uppercase tracking-wide">
-                    Physical Store
-                  </h3>
+                  <h3 className="text-xl font-bold text-slate-900">Physical Store</h3>
                 </div>
-
-                <div className="p-8 flex-grow space-y-4">
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Rent</span>
-                    <span className="font-bold text-black">US$2,250</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Electricity</span>
-                    <span className="font-bold text-black">US$250</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Water</span>
-                    <span className="font-bold text-black">US$75</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">1 Staff (Full Package)</span>
-                    <span className="font-bold text-black">US$2,250</span>
-                  </div>
+                <div className="px-7 py-5 flex-grow space-y-0">
+                  {[
+                    { label: "Rent", value: "US$2,250" },
+                    { label: "Electricity", value: "US$250" },
+                    { label: "Water", value: "US$75" },
+                    { label: "1 Staff (Full Package)", value: "US$2,250" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex justify-between items-center py-3 border-b border-slate-100 last:border-0">
+                      <span className="text-slate-500 text-sm">{item.label}</span>
+                      <span className="font-semibold text-slate-800">{item.value}</span>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="bg-gray-100 p-8 border-t border-gray-300">
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm font-bold text-gray-800 uppercase tracking-widest">
-                      Monthly Total
-                    </span>
-                    <span className="text-3xl font-extrabold text-red-600">
-                      US$4,825
-                    </span>
+                <div className="bg-red-50 px-7 py-5 border-t border-red-100">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Monthly Total</span>
+                    <span className="text-3xl font-extrabold text-red-600">US$4,825</span>
                   </div>
-                  <div className="flex justify-between items-center pb-6 border-b border-gray-300">
-                    <span className="text-sm font-bold text-gray-800 uppercase tracking-widest">
-                      Annual Total
-                    </span>
-                    <span className="text-xl font-bold text-red-600">
-                      US$57,900
-                    </span>
+                  <div className="flex justify-between items-center pb-4 border-b border-red-100 mb-4">
+                    <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Annual Total</span>
+                    <span className="text-xl font-bold text-red-600">US$57,900</span>
                   </div>
-                  <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-500 uppercase tracking-widest mb-2">
-                      Upfront Startup Cost:
-                    </p>
-                    <p className="text-2xl font-bold text-black">
-                      US$25,000 – US$30,000
-                    </p>
+                  <div className="text-center">
+                    <p className="text-xs text-slate-400 uppercase tracking-widest mb-1">Upfront Startup Cost</p>
+                    <p className="text-xl font-bold text-slate-800">US$25,000 - US$30,000</p>
                   </div>
                 </div>
               </div>
 
-              {/* Mall of Cayman Cost */}
-              <div className="bg-white border-2 border-blue-800 shadow-lg flex flex-col relative">
-                <div className="absolute top-0 right-0 bg-blue-800 text-white text-xs font-bold px-4 py-1 uppercase tracking-widest">
+              {/* Mall of Cayman Card */}
+              <div className="bg-white rounded-2xl border-2 border-indigo-500 shadow-lg overflow-hidden flex flex-col relative">
+                <div className="absolute -top-1 left-28 lg:top-4 lg:right-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
                   Our Solution
                 </div>
-                <div className="p-8 border-b border-gray-200 flex items-center gap-4">
-                  <div className="w-12 h-12 bg-blue-50 border border-blue-200 flex items-center justify-center">
-                    <svg
-                      className="w-6 h-6 text-blue-800"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="square"
-                        strokeLinejoin="miter"
-                        strokeWidth="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                      ></path>
+                <div className="px-7 py-5 border-b border-slate-100 flex items-center gap-4 bg-indigo-50">
+                  <div className="w-11 h-11 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-blue-900 uppercase tracking-wide">
-                    Mall of Cayman
-                  </h3>
+                  <h3 className="text-xl font-bold text-indigo-900">Mall of Cayman</h3>
                 </div>
-
-                <div className="p-8 flex-grow space-y-4">
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Monthly Plan</span>
-                    <span className="font-bold text-black">US$50 – US$160</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Store Manager (Optional)</span>
-                    <span className="font-bold text-black">US$100</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-600">Electricity</span>
-                    <span className="font-bold text-black">US$0</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-3 border-b border-gray-100">
-                    <span className="text-gray-500 italic">All other costs</span>
-                    <span className="font-bold text-black">US$0</span>
-                  </div>
+                <div className="px-7 py-5 flex-grow space-y-0">
+                  {[
+                    { label: "Monthly Plan", value: "US$50 â€“ US$160" },
+                    { label: "Store Manager (Optional)", value: "US$100" },
+                    { label: "Electricity", value: "US$0" },
+                    { label: "All other costs", value: "US$0", italic: true },
+                  ].map((item) => (
+                    <div key={item.label} className="flex justify-between items-center py-3 border-b border-slate-100 last:border-0">
+                      <span className={`text-sm ${item.italic ? "text-slate-400 italic" : "text-slate-500"}`}>{item.label}</span>
+                      <span className="font-semibold text-slate-800">{item.value}</span>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="bg-blue-900 p-8 text-white">
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm font-bold text-blue-200 uppercase tracking-widest">
-                      Monthly Total
-                    </span>
-                    <span className="text-3xl font-extrabold text-white">
-                      US$260
-                    </span>
+                <div className="bg-indigo-700 px-7 py-5 border-t border-indigo-600">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-xs font-bold text-indigo-200 uppercase tracking-widest">Monthly Total</span>
+                    <span className="text-3xl font-extrabold text-white">US$260</span>
                   </div>
-                  <div className="flex justify-between items-center pb-6 border-b border-blue-800">
-                    <span className="text-sm font-bold text-blue-200 uppercase tracking-widest">
-                      Annual Total
-                    </span>
-                    <span className="text-xl font-bold text-white">
-                      US$3,120
-                    </span>
+                  <div className="flex justify-between items-center pb-4 border-b border-indigo-600 mb-4">
+                    <span className="text-xs font-bold text-indigo-200 uppercase tracking-widest">Annual Total</span>
+                    <span className="text-xl font-bold text-white">US$3,120</span>
                   </div>
-                  <p className="text-blue-300 text-xs mt-4 mb-6 leading-relaxed">
-                    Gold Plan (US$160/month) × 12 months + Store Manager
-                    (US$100/month) × 12 months
+                  <p className="text-indigo-300 text-xs mb-4 leading-relaxed">
+                    Gold Plan (US$160/month) - 12 months + Store Manager (US$100/month) - 12 months
                   </p>
-                  <div className="mt-6 text-center border-t border-blue-800 pt-6">
-                    <p className="text-sm text-blue-200 uppercase tracking-widest mb-2">
-                      Upfront Startup Cost:
-                    </p>
+                  <div className="text-center border-t border-indigo-600 pt-4">
+                    <p className="text-xs text-indigo-200 uppercase tracking-widest mb-1">Upfront Startup Cost</p>
                     <p className="text-2xl font-bold text-white">US$0</p>
                   </div>
                 </div>
@@ -190,149 +133,105 @@ const Testimonial = () => {
             </div>
 
             {/* Big Visual Statement */}
-            <div className="bg-black border border-gray-800 p-8 md:p-16 text-center shadow-xl">
-              <p className="text-xl md:text-3xl lg:text-4xl font-light text-white leading-tight uppercase tracking-wide">
+            <div className="bg-slate-900 rounded-2xl px-8 sm:px-14 md:px-20 py-14 md:py-20 text-center">
+              <p className="text-base sm:text-xl md:text-2xl font-light text-slate-300 uppercase tracking-wide mb-4">
                 One Full Year on Mall of Cayman Costs Less Than
-                <span className="block mt-6 mb-4 text-3xl md:text-5xl lg:text-7xl font-extrabold text-red-600 tracking-tight">
-                  65% of ONE MONTH
-                </span>
-                <span className="block text-lg md:text-2xl text-gray-400">
-                  of a Traditional Store
-                </span>
+              </p>
+              <p className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-amber-500 tracking-tight mb-3">
+                65% of ONE MONTH
+              </p>
+              <p className="text-sm sm:text-base md:text-lg text-slate-400 uppercase tracking-wide">
+                of a Traditional Store
               </p>
             </div>
           </div>
         </section>
 
         {/* Pricing Section */}
-        <section className="py-16 md:py-24 px-6 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-black uppercase tracking-tight mb-4">
+        <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <span className="inline-block bg-amber-100 text-amber-700 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">
+                Pricing
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">
                 Choose Your Gold Plan
               </h2>
-              <div className="h-1 w-24 bg-blue-800 mx-auto mb-6"></div>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                One plan. All features. Choose the billing period that works for
-                you — the longer you commit, the more you save.
+              <div className="w-16 h-1 bg-indigo-600 mx-auto rounded-full mb-5"></div>
+              <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                One plan. All features. Choose the billing period that works for you â€” the longer you commit, the more you save.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
-              {/* Billing cycle toggles */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                {[
-                  {
-                    value: "monthly",
-                    label: "1 Month",
-                    price: GOLD_PRICES.monthly,
-                    discount: null,
-                  },
-                  {
-                    value: "quarterly",
-                    label: "3 Months",
-                    price: GOLD_PRICES.quarterly,
-                    discount: "10%",
-                  },
-                  {
-                    value: "semiannual",
-                    label: "6 Months",
-                    price: GOLD_PRICES.semiannual,
-                    discount: "15%",
-                  },
-                  {
-                    value: "annual",
-                    label: "12 Months",
-                    price: GOLD_PRICES.annual,
-                    discount: "20%",
-                  },
-                ].map((c) => (
-                  <button
-                    key={c.value}
-                    type="button"
-                    onClick={() => setBillingCycle(c.value)}
-                    className={`relative flex flex-col items-center justify-center p-6 border-2 transition-all cursor-pointer ${billingCycle === c.value
-                        ? "border-black bg-black text-white"
-                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-400"
-                      }`}
-                  >
-                    {c.discount && (
-                      <span className="absolute -top-3 right-[-10px] md:right-auto md:left-1/2 md:-translate-x-1/2 text-xs bg-red-600 text-white px-3 py-1 font-bold uppercase tracking-widest shadow-sm">
-                        Save {c.discount}
-                      </span>
-                    )}
-                    <span
-                      className={`text-sm font-bold uppercase tracking-widest mb-2 ${billingCycle === c.value ? "text-gray-300" : "text-gray-500"
-                        }`}
-                    >
-                      {c.label}
+            {/* Billing cycle toggles */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10 max-w-2xl mx-auto">
+              {[
+                { value: "monthly", label: "1 Month", price: GOLD_PRICES.monthly, discount: null },
+                { value: "quarterly", label: "3 Months", price: GOLD_PRICES.quarterly, discount: "10%" },
+                { value: "semiannual", label: "6 Months", price: GOLD_PRICES.semiannual, discount: "15%" },
+                { value: "annual", label: "12 Months", price: GOLD_PRICES.annual, discount: "20%" },
+              ].map((c) => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setBillingCycle(c.value)}
+                  className={`relative flex flex-col items-center justify-center py-4 px-3 rounded-xl border-2 font-medium transition-all cursor-pointer ${
+                    billingCycle === c.value
+                      ? "border-indigo-600 bg-indigo-600 text-white shadow-lg"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:bg-indigo-50"
+                  }`}
+                >
+                  {c.discount && (
+                    <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap font-bold">
+                      Save {c.discount}
                     </span>
-                    <span className="text-2xl font-extrabold tracking-tight">
-                      ${c.price}
-                    </span>
-                  </button>
-                ))}
+                  )}
+                  <span className={`text-xs font-bold uppercase tracking-wide mb-1 ${
+                    billingCycle === c.value ? "text-indigo-100" : "text-slate-400"
+                  }`}>
+                    {c.label}
+                  </span>
+                  <span className="text-2xl font-extrabold">${c.price}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Gold Plan Card */}
+            <div className="max-w-md mx-auto bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden">
+              <div className="bg-indigo-700 text-white text-center py-8 px-6">
+                <svg className="w-8 h-8 mx-auto mb-3 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                </svg>
+                <h3 className="text-2xl font-extrabold uppercase tracking-widest mb-1">Gold Plan</h3>
+                <p className="text-indigo-300 text-sm">Everything you need to grow</p>
               </div>
 
-              {/* Single Gold plan feature card */}
-              <div className="max-w-lg mx-auto bg-white border border-gray-300 shadow-2xl relative overflow-hidden">
-                <div className="bg-blue-900 text-white text-center py-8 px-6 border-b-4 border-black relative">
-                  <svg
-                    className="w-8 h-8 mx-auto mb-4 text-white opacity-80"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                  </svg>
-                  <h3 className="text-3xl font-extrabold uppercase tracking-widest mb-2">
-                    Gold Plan
-                  </h3>
-                  <p className="text-blue-200 text-sm tracking-wide">
-                    Everything you need to grow
-                  </p>
+              <div className="p-8">
+                <div className="text-center mb-8 pb-8 border-b border-slate-100">
+                  <span className="text-5xl font-extrabold text-slate-900">${GOLD_PRICES[billingCycle]}</span>
+                  <span className="text-slate-400 font-semibold block text-sm mt-1 uppercase tracking-wide">/ {billingLabel.toLowerCase()}</span>
                 </div>
 
-                <div className="p-8 md:p-12">
-                  <div className="text-center mb-10 pb-10 border-b border-gray-200">
-                    <span className="text-6xl font-extrabold text-black tracking-tight">
-                      ${GOLD_PRICES[billingCycle]}
-                    </span>
-                    <span className="text-gray-500 font-bold uppercase tracking-widest block mt-2">
-                      / {billingLabel.toLowerCase()}
-                    </span>
-                  </div>
-
-                  <div className="space-y-4 mb-10">
-                    {GOLD_FEATURES.map((f, i) => (
-                      <div key={i} className="flex items-center text-black font-medium">
-                        <svg
-                          className="w-5 h-5 text-blue-800 mr-4 flex-shrink-0"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="square"
-                            strokeLinejoin="miter"
-                            strokeWidth="3"
-                            d="M5 13l4 4L19 7"
-                          />
+                <ul className="space-y-3 mb-8">
+                  {GOLD_FEATURES.map((f, i) => (
+                    <li key={i} className="flex items-center gap-3 text-slate-700 text-sm font-medium">
+                      <span className="flex-shrink-0 w-5 h-5 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                         </svg>
-                        {f}
-                      </div>
-                    ))}
-                  </div>
+                      </span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      navigate("/register", { state: { billingCycle } })
-                    }
-                    className="w-full bg-black hover:bg-gray-800 text-white font-extrabold uppercase tracking-widest text-center py-5 transition-colors cursor-pointer"
-                  >
-                    Get Started — ${GOLD_PRICES[billingCycle]}
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => navigate("/register", { state: { billingCycle } })}
+                  className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold uppercase tracking-widest py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  Get Started ${GOLD_PRICES[billingCycle]}
+                </button>
               </div>
             </div>
           </div>

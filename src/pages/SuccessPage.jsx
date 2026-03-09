@@ -83,126 +83,124 @@ const SuccessPage = () => {
     }[billing] || "";
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
       <ConfettiCanvas />
 
-      {/* Glow rings */}
-      <div className="absolute w-96 h-96 rounded-full bg-green-100 opacity-40 blur-3xl -top-24 -left-24" />
-      <div className="absolute w-96 h-96 rounded-full bg-blue-100 opacity-40 blur-3xl -bottom-24 -right-24" />
+      {/* Background decoration */}
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-indigo-100 opacity-30 blur-3xl -top-32 -left-32 pointer-events-none" />
+      <div className="absolute w-[500px] h-[500px] rounded-full bg-emerald-100 opacity-30 blur-3xl -bottom-32 -right-32 pointer-events-none" />
 
-      <div className="relative z-10 max-w-lg w-full text-center space-y-6">
-        {/* Animated check */}
-        <div className="flex justify-center">
-          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-2xl animate-bounce-once">
-            <svg
-              className="w-14 h-14 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+      <div className="relative z-10 w-full max-w-xl">
+        {/* Card */}
+        <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+          {/* Top banner */}
+          <div className="bg-indigo-700 px-8 py-10 text-center">
+            <div className="flex justify-center mb-5">
+              <div className="w-20 h-20 rounded-full bg-white/20 border-4 border-white/30 flex items-center justify-center shadow-lg">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
+              🎉 Congratulations!
+            </h1>
+            <p className="text-indigo-200 text-lg font-medium">Welcome aboard, {shopName}!</p>
           </div>
-        </div>
 
-        {/* Main message */}
-        <div className="space-y-3">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
-            🎉 Congratulations!
-          </h1>
-          <p className="text-xl sm:text-2xl font-semibold text-green-600">
-            Welcome aboard, {shopName}!
-          </p>
-          <p className="text-base sm:text-lg text-gray-700 font-medium">
-            You have successfully purchased the{" "}
-            <span className="text-yellow-600 font-bold">Gold Plan</span> —{" "}
-            {billingLabel} billing at{" "}
-            <span className="font-bold text-gray-900">
-              $
-              {{
-                monthly: "99",
-                "3-Month": "267.30",
-                "6-Month": "504.90",
-                Annual: "950.40",
-              }[billingLabel] || "99"}
-            </span>
-            .
-          </p>
-          <p className="text-sm text-gray-500">
-            Your store is now verified and your subscription is active. Start
-            listing products and reach customers across the Cayman Islands.
-          </p>
-        </div>
-
-        {/* Subscription badge */}
-        {planLabel && (
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg text-sm font-semibold">
-            <span className="text-xl">💎</span>
-            {planLabel} Plan · {billingLabel} Billing
-            {paymentFree && (
-              <span className="ml-1 bg-white/20 px-2 py-0.5 rounded-full text-xs">
-                Revenue Share
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Info card */}
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6 text-left shadow-sm">
-          <h3 className="font-bold text-green-900 text-lg mb-4">
-            What happens next?
-          </h3>
-          <ol className="space-y-3 text-sm text-green-800">
-            {[
-              "Your account is active and ready to use",
-              paymentFree
-                ? "You'll pay 10% commission only when you make sales"
-                : "Your subscription is confirmed and payment processed",
-              "Admin will review your trade license documents",
-              "Once approved you can start listing products",
-              "Customers across Cayman Islands can discover your shop!",
-            ].map((step, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 text-white text-xs font-bold flex items-center justify-center">
-                  {i + 1}
+          <div className="px-6 sm:px-8 py-8 space-y-6">
+            {/* Description */}
+            <div className="text-center space-y-2">
+              <p className="text-slate-700 font-medium">
+                You have successfully purchased the{" "}
+                <span className="text-amber-600 font-bold">Gold Plan</span> —{" "}
+                {billingLabel} billing at{" "}
+                <span className="font-bold text-slate-900">
+                  $
+                  {{
+                    monthly: "99",
+                    "3-Month": "267.30",
+                    "6-Month": "504.90",
+                    Annual: "950.40",
+                  }[billingLabel] || "99"}
                 </span>
-                {step}
-              </li>
-            ))}
-          </ol>
-        </div>
+                .
+              </p>
+              <p className="text-sm text-slate-500">
+                Your store is now verified and your subscription is active. Start
+                listing products and reach customers across the Cayman Islands.
+              </p>
+            </div>
 
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-          <Link
-            to="/"
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-md hover:shadow-lg"
-          >
-            🏠 Back to Home
-          </Link>
-          <a
-            href="mailto:info@mallofcayman.com"
-            className="px-8 py-3 bg-white border-2 border-gray-200 text-gray-700 font-semibold rounded-xl hover:border-blue-400 hover:text-blue-600 transition-all"
-          >
-            ✉️ Contact Support
-          </a>
-        </div>
+            {/* Subscription badge */}
+            {planLabel && (
+              <div className="flex justify-center">
+                <div className="inline-flex items-center gap-2.5 bg-indigo-50 border border-indigo-200 text-indigo-800 px-5 py-2.5 rounded-full text-sm font-semibold">
+                  <span className="text-lg">💎</span>
+                  {planLabel} Plan · {billingLabel} Billing
+                  {paymentFree && (
+                    <span className="ml-1 bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-bold">
+                      Revenue Share
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
 
-        <p className="text-xs text-gray-400">
-          {shopEmail ? (
-            <>
-              A confirmation email has been sent to{" "}
-              <span className="font-semibold text-gray-600">{shopEmail}</span>.
-            </>
-          ) : (
-            "A confirmation email will be sent to your registered address shortly."
-          )}
-        </p>
+            {/* What happens next */}
+            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <h3 className="font-bold text-slate-900 text-base mb-4">
+                What happens next?
+              </h3>
+              <ol className="space-y-2.5">
+                {[
+                  "Your account is active and ready to use",
+                  paymentFree
+                    ? "You'll pay 10% commission only when you make sales"
+                    : "Your subscription is confirmed and payment processed",
+                  "Admin will review your trade license documents",
+                  "Once approved you can start listing products",
+                  "Customers across Cayman Islands can discover your shop!",
+                ].map((step, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-slate-700">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                      {i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                to="/"
+                className="flex-1 text-center px-6 py-3 bg-indigo-700 hover:bg-indigo-800 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                🏠 Back to Home
+              </Link>
+              <a
+                href="mailto:info@mallofcayman.com"
+                className="flex-1 text-center px-6 py-3 bg-white border-2 border-slate-200 text-slate-700 font-semibold rounded-xl hover:border-indigo-400 hover:text-indigo-600 transition-all duration-200"
+              >
+                ✉️ Contact Support
+              </a>
+            </div>
+
+            {/* Email note */}
+            <p className="text-center text-xs text-slate-400">
+              {shopEmail ? (
+                <>
+                  A confirmation email has been sent to{" "}
+                  <span className="font-semibold text-slate-600">{shopEmail}</span>.
+                </>
+              ) : (
+                "A confirmation email will be sent to your registered address shortly."
+              )}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
