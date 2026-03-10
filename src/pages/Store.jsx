@@ -126,7 +126,7 @@ const Store = () => {
                       </li>
                       <li className="flex items-center gap-2">
                         <span className="w-1.5 h-1.5 bg-emerald-600 rounded-full flex-shrink-0"></span>
-                        <span>Year 2 Renewal: <strong className="text-slate-800">US$1,728/year</strong> (10% discount applied)</span>
+                        <span>Year 2 Renewal: <strong className="text-slate-800">US$3,456/year</strong> (10% discount applied)</span>
                       </li>
                     </ul>
                   </div>
