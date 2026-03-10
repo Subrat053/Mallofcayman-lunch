@@ -157,7 +157,6 @@ const Register = () => {
     email: "",
     name: "",
     phoneNumber: "",
-    gstNumber: "",
     address: "",
     zipCode: "",
     password: "",
@@ -320,10 +319,6 @@ const Register = () => {
     }
     if (!formData.zipCode) {
       toast.error("Please enter zip code");
-      return false;
-    }
-    if (tradeLicenses.length === 0) {
-      toast.error("Please upload at least one Trade & Business License");
       return false;
     }
     return true;
@@ -585,19 +580,6 @@ const Register = () => {
             required
           />
         </div>
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            GST / Tax Number <span className="text-slate-400">(Optional)</span>
-          </label>
-          <input
-            type="text"
-            name="gstNumber"
-            value={formData.gstNumber}
-            onChange={handleInput}
-            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white transition-all"
-            placeholder="Tax registration number"
-          />
-        </div>
       </div>
 
       {/* PayPal Email Required */}
@@ -783,29 +765,29 @@ const Register = () => {
       </div>
 
       {/* Trade License Upload */}
-      <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 rounded-xl p-4 shadow-sm">
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-xl p-4 shadow-sm">
         <div className="flex items-start gap-2 mb-3">
-          <div className="flex-shrink-0 w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+          <div className="flex-shrink-0 w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
             <span className="text-xl">📄</span>
           </div>
           <div>
-            <p className="font-bold text-red-900 text-lg">
-              Trade &amp; Business License{" "}
-              <span className="text-red-500">*</span>
+            <p className="font-bold text-amber-900 text-lg">
+              Trade &amp; Business License
+              <span className="text-amber-700 text-sm font-medium"> (Optional)</span>
             </p>
-            <p className="text-sm text-red-700 mt-1 leading-relaxed">
+            <p className="text-sm text-amber-800 mt-1 leading-relaxed">
               Upload your Trade License and Business Registration documents.
-              This is <strong>mandatory</strong> for verification.
+              This is <strong>strongly recommended</strong> for faster verification.
             </p>
           </div>
         </div>
 
         <label
           htmlFor="license-input"
-          className="flex flex-col items-center justify-center w-full h-28 border-2 border-red-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-red-50 transition-colors"
+          className="flex flex-col items-center justify-center w-full h-28 border-2 border-amber-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-amber-50 transition-colors"
         >
           <svg
-            className="w-8 h-8 mb-2 text-red-500"
+            className="w-8 h-8 mb-2 text-amber-600"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -817,11 +799,11 @@ const Register = () => {
               d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
             />
           </svg>
-          <p className="text-sm text-red-600">
+          <p className="text-sm text-amber-700">
             <span className="font-semibold">Click to upload</span> or drag &
             drop
           </p>
-          <p className="text-xs text-red-500 mt-1">
+          <p className="text-xs text-amber-600 mt-1">
             PNG, JPG, PDF · Max 10 MB · Up to 5 files
           </p>
           <input

@@ -119,7 +119,7 @@ const Hero = () => {
                     <p className="text-base md:text-lg lg:text-xl text-neutral-600 mb-12 leading-relaxed max-w-3xl mx-auto">
                         You've dreamed of launching your own business. You've felt the weight of high costs holding you back. Today, that changes. Mall of Cayman is opening its doors to Cayman's next generation of entrepreneurs—and you can secure your spot at <strong className="text-neutral-900">50% OFF founding rates</strong>.
                     </p>
-                    <a href="https://www.mallofcayman.com/shop/subscriptions" className="cta-button inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-10 py-5 rounded-full shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer" style={{ pointerEvents: 'auto' }}>
+                    <a href="/register" className="cta-button inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-10 py-5 rounded-full shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer" style={{ pointerEvents: 'auto' }}>
                         Join Now
                     </a>
                 </div>

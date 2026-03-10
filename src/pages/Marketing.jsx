@@ -89,7 +89,7 @@ const Marketing = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
                         <a
-                            href="https://www.mallofcayman.com/shop/subscriptions"
+                            href="/register"
                             className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-900 font-extrabold text-lg px-10 py-4 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer"
                             style={{ pointerEvents: 'auto' }}
                         >
