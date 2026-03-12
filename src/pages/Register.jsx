@@ -20,6 +20,39 @@ import SubscriptionService from "../services/SubscriptionService";
 import SubscriptionBanner from "./SubscriptionBanner";
 
 const API_BASE = `${API_CONFIG.baseURL}/api`;
+const DEFAULT_MONTHLY_GOLD_PRICE = 160;
+
+const getGoldPriceMap = (monthlyPrice) => ({
+  monthly: monthlyPrice,
+  quarterly: monthlyPrice * 3,
+  semiannual: monthlyPrice * 6,
+  annual: monthlyPrice * 12,
+});
+
+const getPaidPlans = (monthlyPrice) => [
+  {
+    id: "monthly",
+    label: "Monthly",
+    price: monthlyPrice,
+    cycle: "monthly",
+    period: "/month",
+  },
+  {
+    id: "semiannual",
+    label: "Semiannual",
+    price: monthlyPrice * 6,
+    cycle: "semiannual",
+    period: "/6 months",
+  },
+  {
+    id: "annual",
+    label: "Annual",
+    price: monthlyPrice * 12,
+    cycle: "annual",
+    period: "/year",
+    save: "Best Value",
+  },
+];
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
 // Load Stripe with public key from environment
@@ -37,7 +70,6 @@ const GOLD_PLAN = {
   id: "gold",
   name: "Gold",
   color: "from-yellow-400 to-yellow-600",
-  price: { monthly: 160, quarterly: 480, semiannual: 960, annual: 1920 },
   features: [
     "Unlimited Products",
     "Business profile & logo",
@@ -49,13 +81,6 @@ const GOLD_PLAN = {
     "Ad pre-approval",
   ],
 };
-
-// Paid plans shown when all free slots are taken
-const PAID_PLANS = [
-  { id: "monthly", label: "Monthly", price: 160, cycle: "monthly", period: "/month" },
-  { id: "semiannual", label: "Semiannual", price: 960, cycle: "semiannual", period: "/6 months" },
-  { id: "annual", label: "Annual", price: 1920, cycle: "annual", period: "/year", save: "Best Value" },
-];
 
 // Keep PLANS as a single-item array so the rest of the code (getPrice, order
 // summary lookups) works without any other changes.
@@ -170,6 +195,18 @@ const Register = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
   const [isFreeEarlySeller, setIsFreeEarlySeller] = useState(false);
   const [paidPlanCycle, setPaidPlanCycle] = useState("monthly");
+  const [monthlyGoldPrice, setMonthlyGoldPrice] = useState(
+    DEFAULT_MONTHLY_GOLD_PRICE,
+  );
+
+  const goldPrices = React.useMemo(
+    () => getGoldPriceMap(monthlyGoldPrice),
+    [monthlyGoldPrice],
+  );
+  const paidPlans = React.useMemo(
+    () => getPaidPlans(monthlyGoldPrice),
+    [monthlyGoldPrice],
+  );
 
   const [formData, setFormData] = useState({
     email: "",
@@ -195,6 +232,11 @@ const Register = () => {
     SubscriptionService.getSubscriptionStatus()
       .then((data) => {
         setSubscriptionStatus(data);
+        const backendMonthly =
+          Number(data?.planPricing?.gold?.monthly) ||
+          Number(data?.monthlyPrice) ||
+          DEFAULT_MONTHLY_GOLD_PRICE;
+        setMonthlyGoldPrice(backendMonthly);
         if (data.freeAvailable) {
           setIsFreeEarlySeller(true);
         }
@@ -382,8 +424,8 @@ const Register = () => {
   // ── Stripe: get client secret ─────────────────────────────────────────────
   const fetchPaymentIntent = async () => {
     // When free slots gone, use PAID_PLANS pricing
-    const paidPlan = PAID_PLANS.find((p) => p.cycle === paidPlanCycle);
-    const price = paidPlan?.price || 160;
+    const paidPlan = paidPlans.find((p) => p.cycle === paidPlanCycle);
+    const price = paidPlan?.price || monthlyGoldPrice;
 
     if (price === 0) {
       setClientSecret(null);
@@ -426,7 +468,7 @@ const Register = () => {
       Object.entries(formData).forEach(([k, v]) => {
         if (v) form.append(k, v);
       });
-      const effectiveBillingCycle = isFreeEarlySeller ? "monthly" : paidPlanCycle;
+      const effectiveBillingCycle = isFreeEarlySeller ? "annual" : paidPlanCycle;
 
       form.append("selectedPlan", selectedPlan);
       form.append("billingCycle", effectiveBillingCycle);
@@ -478,8 +520,8 @@ const Register = () => {
   // ─── RENDER HELPERS ───────────────────────────────────────────────────────
   const getPrice = () => {
     if (isFreeEarlySeller) return 0;
-    const paidPlan = PAID_PLANS.find((p) => p.cycle === paidPlanCycle);
-    return paidPlan?.price || 160;
+    const paidPlan = paidPlans.find((p) => p.cycle === paidPlanCycle);
+    return paidPlan?.price || monthlyGoldPrice;
   };
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -958,11 +1000,11 @@ const Register = () => {
               </div>
               <div>
                 <h3 className="text-xl font-extrabold text-slate-900">Gold Plan – Free</h3>
-                <p className="text-slate-500 text-sm">Early seller benefit – no payment required</p>
+                <p className="text-slate-500 text-sm">Early seller benefit – 1 year free Gold membership</p>
               </div>
               <div className="ml-auto text-right">
                 <span className="text-3xl font-extrabold text-emerald-600">$0</span>
-                <span className="text-slate-400 text-sm block line-through">$160/month</span>
+                <span className="text-slate-400 text-sm block line-through">${goldPrices.monthly}/month</span>
               </div>
             </div>
 
@@ -991,7 +1033,7 @@ const Register = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {PAID_PLANS.map((plan) => (
+            {paidPlans.map((plan) => (
               <button
                 key={plan.id}
                 type="button"
@@ -1062,7 +1104,9 @@ const Register = () => {
             <div className="flex justify-between">
               <span className="text-slate-600">Billing</span>
               <span className="font-medium">
-                {isFreeEarlySeller ? "Free (Early Seller)" : (PAID_PLANS.find((p) => p.cycle === paidPlanCycle)?.label || "Monthly")}
+                {isFreeEarlySeller
+                  ? "Annual (Early Seller Free)"
+                  : paidPlans.find((p) => p.cycle === paidPlanCycle)?.label || "Monthly"}
               </span>
             </div>
             {isFreeEarlySeller && (
@@ -1096,7 +1140,7 @@ const Register = () => {
                   </p>
                   <p className="text-sm text-slate-600">
                     {isFreeEarlySeller
-                      ? "You're one of the first 15 sellers — no payment required."
+                      ? "You're one of the first 15 sellers — Gold is free for 1 full year."
                       : "You pay 10% commission only when you earn."}
                   </p>
                 </div>

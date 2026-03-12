@@ -1,12 +1,15 @@
-﻿import React, { useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SubscriptionService from "../services/SubscriptionService";
 
-const GOLD_PRICES = {
-  monthly: 5,
-  quarterly: 13.5,
-  semiannual: 25.5,
-  annual: 48,
-};
+const DEFAULT_MONTHLY_GOLD_PRICE = 160;
+
+const getGoldPrices = (monthlyPrice) => ({
+  monthly: monthlyPrice,
+  quarterly: monthlyPrice * 3,
+  semiannual: monthlyPrice * 6,
+  annual: monthlyPrice * 12,
+});
 
 const GOLD_FEATURES = [
   "50 Products",
@@ -21,7 +24,76 @@ const GOLD_FEATURES = [
 
 const Testimonial = () => {
   const [billingCycle, setBillingCycle] = useState("monthly");
+  const [subscriptionStatus, setSubscriptionStatus] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    SubscriptionService.getSubscriptionStatus()
+      .then((data) => {
+        setSubscriptionStatus(data);
+      })
+      .catch(() => setSubscriptionStatus(null));
+  }, []);
+
+  const monthlyGoldPrice =
+    Number(subscriptionStatus?.planPricing?.gold?.monthly) ||
+    Number(subscriptionStatus?.monthlyPrice) ||
+    DEFAULT_MONTHLY_GOLD_PRICE;
+  const GOLD_PRICES = useMemo(
+    () => getGoldPrices(monthlyGoldPrice),
+    [monthlyGoldPrice],
+  );
+  const isEarlySellerFree = Boolean(subscriptionStatus?.freeAvailable);
+
+  const billingOptions = isEarlySellerFree
+    ? [
+        {
+          value: "annual",
+          label: "1 Year Free",
+          price: 0,
+          discount: "100%",
+        },
+      ]
+    : [
+        {
+          value: "monthly",
+          label: "1 Month",
+          price: GOLD_PRICES.monthly,
+          discount: null,
+        },
+        {
+          value: "quarterly",
+          label: "3 Months",
+          price: GOLD_PRICES.quarterly,
+          discount: null,
+        },
+        {
+          value: "semiannual",
+          label: "6 Months",
+          price: GOLD_PRICES.semiannual,
+          discount: null,
+        },
+        {
+          value: "annual",
+          label: "12 Months",
+          price: GOLD_PRICES.annual,
+          discount: null,
+        },
+      ];
+
+  useEffect(() => {
+    if (isEarlySellerFree) {
+      setBillingCycle("annual");
+      return;
+    }
+    if (!billingOptions.some((option) => option.value === billingCycle)) {
+      setBillingCycle("monthly");
+    }
+  }, [isEarlySellerFree, billingCycle, billingOptions]);
+
+  const currentSelection =
+    billingOptions.find((option) => option.value === billingCycle) ||
+    billingOptions[0];
 
   const billingLabel = {
     monthly: "Monthly",
@@ -29,6 +101,8 @@ const Testimonial = () => {
     semiannual: "6 Months",
     annual: "12 Months",
   }[billingCycle];
+
+  const displayPrice = isEarlySellerFree ? 0 : currentSelection?.price || 0;
 
   return (
     <>
@@ -159,19 +233,16 @@ const Testimonial = () => {
               </h2>
               <div className="w-16 h-1 bg-indigo-600 mx-auto rounded-full mb-5"></div>
               <p className="text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                One plan. All features. Choose the billing period that works for you. The longer you commit, the more you save.
+                {isEarlySellerFree
+                  ? `First ${subscriptionStatus?.freeSellerLimit || 15} sellers get 1 full year of Gold for free. ${subscriptionStatus?.remainingSlots ?? ""} slot${subscriptionStatus?.remainingSlots === 1 ? "" : "s"} left.`
+                  : "One plan. All features. Choose the billing period that works for you."}
               
               </p>
             </div>
 
             {/* Billing cycle toggles */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10 max-w-2xl mx-auto">
-              {[
-                { value: "monthly", label: "1 Month", price: GOLD_PRICES.monthly, discount: null },
-                { value: "quarterly", label: "3 Months", price: GOLD_PRICES.quarterly, discount: "10%" },
-                { value: "semiannual", label: "6 Months", price: GOLD_PRICES.semiannual, discount: "15%" },
-                { value: "annual", label: "12 Months", price: GOLD_PRICES.annual, discount: "20%" },
-              ].map((c) => (
+            <div className={`grid ${isEarlySellerFree ? "grid-cols-1 sm:grid-cols-1" : "grid-cols-2"} grid-cols-2 sm:grid-cols-4 gap-3 mb-10 max-w-2xl mx-auto`}>
+              {billingOptions.map((c) => (
                 <button
                   key={c.value}
                   type="button"
@@ -184,7 +255,7 @@ const Testimonial = () => {
                 >
                   {c.discount && (
                     <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[10px] bg-amber-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap font-bold">
-                      Save {c.discount}
+                      {isEarlySellerFree ? `FREE ${c.discount}` : `Save ${c.discount}`}
                     </span>
                   )}
                   <span className={`text-xs font-bold uppercase tracking-wide mb-1 ${
@@ -209,8 +280,15 @@ const Testimonial = () => {
 
               <div className="p-8">
                 <div className="text-center mb-8 pb-8 border-b border-slate-100">
-                  <span className="text-5xl font-extrabold text-slate-900">${GOLD_PRICES[billingCycle]}</span>
-                  <span className="text-slate-400 font-semibold block text-sm mt-1 uppercase tracking-wide">/ {billingLabel.toLowerCase()}</span>
+                  <span className="text-5xl font-extrabold text-slate-900">${displayPrice}</span>
+                  <span className="text-slate-400 font-semibold block text-sm mt-1 uppercase tracking-wide">
+                    / {isEarlySellerFree ? "1 year" : billingLabel.toLowerCase()}
+                  </span>
+                  {isEarlySellerFree && (
+                    <span className="text-emerald-600 text-sm font-semibold block mt-2">
+                      First {subscriptionStatus?.freeSellerLimit || 15} sellers only
+                    </span>
+                  )}
                 </div>
 
                 <ul className="space-y-3 mb-8">
@@ -231,7 +309,7 @@ const Testimonial = () => {
                   onClick={() => navigate("/register", { state: { billingCycle } })}
                   className="w-full bg-indigo-700 hover:bg-indigo-800 text-white font-bold uppercase tracking-widest py-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
                 >
-                  Get Started ${GOLD_PRICES[billingCycle]}
+                  {isEarlySellerFree ? "Get Started Free" : `Get Started $${displayPrice}`}
                 </button>
               </div>
             </div>
