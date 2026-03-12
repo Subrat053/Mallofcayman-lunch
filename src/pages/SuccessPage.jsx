@@ -66,9 +66,12 @@ const SuccessPage = () => {
   const { state } = useLocation();
   const shopName = state?.name || "Seller";
   const shopEmail = state?.email || "";
-  const plan = state?.selectedPlan || "";
-  const billing = state?.billingCycle || "";
-  const paymentFree = state?.paymentFree ?? false;
+
+  // Support both new nested `subscription` object and legacy flat keys
+  const plan = state?.subscription?.plan || state?.selectedPlan || "";
+  const billing = state?.subscription?.billingCycle || state?.billingCycle || "";
+  const paymentFree =
+    state?.subscription?.paymentStatus === "free" || state?.paymentFree || !plan;
 
   const planLabel = plan
     ? plan.charAt(0).toUpperCase() + plan.slice(1).replace("-", " ")
@@ -140,7 +143,7 @@ const SuccessPage = () => {
                   {planLabel} Plan · {billingLabel} Billing
                   {paymentFree && (
                     <span className="ml-1 bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full text-xs font-bold">
-                      Revenue Share
+                      Free Plan
                     </span>
                   )}
                 </div>

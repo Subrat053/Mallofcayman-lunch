@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cayman from '../assets/cayman.mp4'
 import img from '../assets/img.jpg'
+import SubscriptionBanner from './SubscriptionBanner';
 const Hero = () => {
     const [timeLeft, setTimeLeft] = useState({
         days: '00',
@@ -108,6 +109,13 @@ const Hero = () => {
                     <p className="text-sm md:text-lg lg:text-2xl text-white/90 max-w-3xl mx-auto mb-1 font-medium">
                         Where Cayman's Next Business Leaders Begin
                     </p>
+                </div>
+            </section>
+
+            {/* Early Seller Subscription Banner */}
+            <section className="py-8 px-6">
+                <div className="max-w-4xl mx-auto">
+                    <SubscriptionBanner />
                 </div>
             </section>
 

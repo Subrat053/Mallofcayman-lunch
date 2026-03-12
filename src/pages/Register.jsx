@@ -1,13 +1,13 @@
 import React, { useState, useRef, useCallback } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { HiOutlineCamera } from "react-icons/hi";
 import { MdMyLocation } from "react-icons/md";
 import { FiMapPin, FiArrowLeft, FiArrowRight, FiCheck } from "react-icons/fi";
-import { BsCreditCard, BsCheckCircle } from "react-icons/bs";
+import { BsCreditCard } from "react-icons/bs";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
@@ -15,11 +15,15 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { API_CONFIG } from "../config/api.config";
+import SubscriptionService from "../services/SubscriptionService";
+import SubscriptionBanner from "./SubscriptionBanner";
+
+const API_BASE = `${API_CONFIG.baseURL}/api`;
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
-// Read from Mallofcayman-lunch/.env  →  VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...
-const STRIPE_PUBLISHABLE_KEY =
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "";
+// Load Stripe with public key from environment
+const STRIPE_PUBLISHABLE_KEY = API_CONFIG.stripePublicKey || "";
 const stripeKeyValid =
   STRIPE_PUBLISHABLE_KEY.startsWith("pk_") &&
   !STRIPE_PUBLISHABLE_KEY.includes("PASTE_YOUR") &&
@@ -28,14 +32,12 @@ const stripePromise = stripeKeyValid
   ? loadStripe(STRIPE_PUBLISHABLE_KEY)
   : null;
 
-const API_BASE = `${import.meta.env.VITE_BACKEND_URI || "http://localhost:5000"}/api`;
-
 // ─── SUBSCRIPTION PLANS ──────────────────────────────────────────────────────
 const GOLD_PLAN = {
   id: "gold",
   name: "Gold",
   color: "from-yellow-400 to-yellow-600",
-  price: { monthly: 5, quarterly: 12.5, semiannual: 25.5, annual: 48 },
+  price: { monthly: 160, quarterly: 480, semiannual: 960, annual: 1920 },
   features: [
     "Unlimited Products",
     "Business profile & logo",
@@ -47,6 +49,13 @@ const GOLD_PLAN = {
     "Ad pre-approval",
   ],
 };
+
+// Paid plans shown when all free slots are taken
+const PAID_PLANS = [
+  { id: "monthly", label: "Monthly", price: 160, cycle: "monthly", period: "/month" },
+  { id: "semiannual", label: "Semiannual", price: 960, cycle: "semiannual", period: "/6 months" },
+  { id: "annual", label: "Annual", price: 1920, cycle: "annual", period: "/year", save: "Best Value" },
+];
 
 // Keep PLANS as a single-item array so the rest of the code (getPrice, order
 // summary lookups) works without any other changes.
@@ -74,21 +83,31 @@ const StripePaymentForm = ({
     try {
       const { error, paymentIntent } = await stripe.confirmCardPayment(
         clientSecret,
-        { payment_method: { card } },
+        {
+          payment_method: {
+            card,
+          },
+        },
       );
 
       if (error) {
         setCardError(error.message);
         toast.error(error.message || "Payment failed");
         setIsLoading(false);
-      } else if (paymentIntent?.status === "succeeded") {
-        onSuccess(paymentIntent.id);
-      } else {
-        toast.error("Payment could not be completed");
-        setIsLoading(false);
+        return;
       }
+
+      if (!paymentIntent || paymentIntent.status !== "succeeded") {
+        setCardError("Payment was not completed.");
+        toast.error("Payment was not completed.");
+        setIsLoading(false);
+        return;
+      }
+
+      onSuccess(paymentIntent.id);
     } catch (err) {
-      toast.error(err.message || "An unexpected error occurred");
+      toast.error(err.response?.data?.message || "An unexpected error occurred");
+      setCardError(err.response?.data?.message);
       setIsLoading(false);
     }
   };
@@ -137,12 +156,8 @@ const StripePaymentForm = ({
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 const Register = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [billingCycle, setBillingCycle] = useState(
-    location.state?.billingCycle || "monthly",
-  );
   // Gold is the only plan – always pre-selected
   const [selectedPlan, setSelectedPlan] = useState("gold");
   const [visible, setVisible] = useState(false);
@@ -152,6 +167,9 @@ const Register = () => {
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoadingMap, setIsLoadingMap] = useState(false);
   const [errors, setErrors] = useState({ name: "", email: "", password: "" });
+  const [subscriptionStatus, setSubscriptionStatus] = useState(null);
+  const [isFreeEarlySeller, setIsFreeEarlySeller] = useState(false);
+  const [paidPlanCycle, setPaidPlanCycle] = useState("monthly");
 
   const [formData, setFormData] = useState({
     email: "",
@@ -171,6 +189,18 @@ const Register = () => {
   });
 
   const addressInputRef = useRef(null);
+
+  // ── Fetch early seller subscription status ────────────────────────────────
+  React.useEffect(() => {
+    SubscriptionService.getSubscriptionStatus()
+      .then((data) => {
+        setSubscriptionStatus(data);
+        if (data.freeAvailable) {
+          setIsFreeEarlySeller(true);
+        }
+      })
+      .catch(() => setSubscriptionStatus(null));
+  }, []);
 
   // ── Autocomplete ──────────────────────────────────────────────────────────
   const initAutocomplete = useCallback(() => {
@@ -335,6 +365,12 @@ const Register = () => {
     if (currentStep === 2 && !validateStep2()) return;
     if (currentStep === 3) {
       if (!validateStep3()) return;
+      // If free early seller, skip payment and go directly to step 4
+      if (isFreeEarlySeller) {
+        setClientSecret(null);
+        setCurrentStep(4);
+        return;
+      }
       await fetchPaymentIntent();
       return; // fetchPaymentIntent advances the step on success
     }
@@ -345,11 +381,11 @@ const Register = () => {
 
   // ── Stripe: get client secret ─────────────────────────────────────────────
   const fetchPaymentIntent = async () => {
-    const plan = PLANS.find((p) => p.id === selectedPlan);
-    const price = plan?.price[billingCycle] || 0;
+    // When free slots gone, use PAID_PLANS pricing
+    const paidPlan = PAID_PLANS.find((p) => p.cycle === paidPlanCycle);
+    const price = paidPlan?.price || 160;
 
     if (price === 0) {
-      // Revenue-share: free plan – skip payment step
       setClientSecret(null);
       setCurrentStep(4);
       return;
@@ -360,8 +396,8 @@ const Register = () => {
       const { data } = await axios.post(
         `${API_BASE}/stripe/create-payment-intent`,
         {
-          selectedPlan,
-          billingCycle,
+          selectedPlan: "gold",
+          billingCycle: paidPlanCycle,
         },
       );
       if (data.success) {
@@ -390,10 +426,15 @@ const Register = () => {
       Object.entries(formData).forEach(([k, v]) => {
         if (v) form.append(k, v);
       });
+      const effectiveBillingCycle = isFreeEarlySeller ? "monthly" : paidPlanCycle;
+
       form.append("selectedPlan", selectedPlan);
-      form.append("billingCycle", billingCycle);
+      form.append("billingCycle", effectiveBillingCycle);
       form.append("stripePaymentIntentId", stripePaymentIntentId);
-      form.append("paymentStatus", stripePaymentIntentId ? "paid" : "free");
+      form.append(
+        "paymentStatus",
+        stripePaymentIntentId ? "paid" : "free",
+      );
 
       const { data } = await axios.post(`${API_BASE}/shop/register`, form, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -404,8 +445,15 @@ const Register = () => {
           state: {
             name: formData.name,
             email: formData.email,
+            // Use production schema field names for the success page
+            subscription: {
+              plan: selectedPlan,
+              billingCycle: effectiveBillingCycle,
+              paymentStatus: stripePaymentIntentId ? "paid" : "free",
+            },
+            // Legacy keys kept for SuccessPage backward compat
             selectedPlan,
-            billingCycle,
+            billingCycle: effectiveBillingCycle,
             paymentFree: !stripePaymentIntentId,
           },
         });
@@ -429,17 +477,10 @@ const Register = () => {
 
   // ─── RENDER HELPERS ───────────────────────────────────────────────────────
   const getPrice = () => {
-    const plan = PLANS.find((p) => p.id === selectedPlan);
-    return plan?.price[billingCycle] || 0;
+    if (isFreeEarlySeller) return 0;
+    const paidPlan = PAID_PLANS.find((p) => p.cycle === paidPlanCycle);
+    return paidPlan?.price || 160;
   };
-
-  const billingLabel = () =>
-    ({
-      quarterly: "3 Months",
-      semiannual: "6 Months",
-      annual: "12 Months",
-      monthly: "Monthly",
-    })[billingCycle];
 
   // ─────────────────────────────────────────────────────────────────────────
   // STEP 1 – Basic Information
@@ -891,111 +932,109 @@ const Register = () => {
   );
 
   // ─────────────────────────────────────────────────────────────────────────
-  // STEP 3 – Choose Plan (Gold only)
+  // STEP 3 – Choose Plan
   // ─────────────────────────────────────────────────────────────────────────
   const renderStep3 = () => (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-slate-800">Gold Plan</h2>
-        <p className="text-slate-500 mt-1">Choose your billing period</p>
-      </div>
+      {/* Subscription Banner */}
+      <SubscriptionBanner compact={false} />
 
-      {/* Billing cycle selector */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {[
-          {
-            value: "monthly",
-            label: "1 Month",
-            price: GOLD_PLAN.price.monthly,
-            discount: null,
-          },
-          {
-            value: "quarterly",
-            label: "3 Months",
-            price: GOLD_PLAN.price.quarterly,
-            discount: "10%",
-          },
-          {
-            value: "semiannual",
-            label: "6 Months",
-            price: GOLD_PLAN.price.semiannual,
-            discount: "15%",
-          },
-          {
-            value: "annual",
-            label: "12 Months",
-            price: GOLD_PLAN.price.annual,
-            discount: "20%",
-          },
-        ].map((c) => (
-          <button
-            key={c.value}
-            type="button"
-            onClick={() => setBillingCycle(c.value)}
-            className={`relative flex flex-col items-center py-4 px-3 rounded-xl border-2 font-medium transition-all ${
-              billingCycle === c.value
-                ? "border-indigo-600 bg-indigo-600 text-white shadow-lg"
-                : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300"
-            }`}
-          >
-            {c.discount && (
-              <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-xs bg-green-500 text-white px-2 py-0.5 rounded-full whitespace-nowrap">
-                Save {c.discount}
-              </span>
-            )}
-            <span
-              className="text-sm font-semibold"
-            >
-              {c.label}
-            </span>
-            <span
-              className="text-xl font-bold mt-1"
-            >
-              ${c.price}
-            </span>
-            {billingCycle === c.value && (
-              <FiCheck className="w-4 h-4 text-white mt-1" />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Single Gold plan card */}
-      <div className="relative p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 shadow-md">
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-700 text-white px-5 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-          ✦ GOLD PLAN ✦
-        </div>
-        <div className="absolute top-4 right-4">
-          <BsCheckCircle className="w-6 h-6 text-indigo-600" />
-        </div>
-
-        <div className="flex items-center gap-4 mb-5">
-          <div className="w-12 h-12 rounded-xl bg-indigo-700 flex items-center justify-center shadow-md">
-            <span className="text-2xl">💎</span>
+      {isFreeEarlySeller ? (
+        /* ── Free Early Seller ─────────────────────────────────────────── */
+        <div className="space-y-4">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-slate-800">🎉 Congratulations!</h2>
+            <p className="text-slate-500 mt-1">You qualify for a FREE subscription</p>
           </div>
-          <div>
-            <h3 className="text-xl font-extrabold text-slate-900">Gold</h3>
-            <p className="text-slate-500 text-sm">Everything you need to grow</p>
-          </div>
-          <div className="ml-auto text-right">
-            <span className="text-3xl font-extrabold text-slate-900">
-              ${GOLD_PLAN.price[billingCycle]}
-            </span>
-            <span className="text-slate-400 text-sm block">
-              /{billingLabel().toLowerCase()}
-            </span>
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {GOLD_PLAN.features.map((f, i) => (
-            <div key={i} className="flex items-center text-slate-700 text-sm">
-              <FiCheck className="w-4 h-4 text-indigo-600 mr-2 flex-shrink-0" />
-              {f}
+          <div className="relative p-6 rounded-2xl border-2 border-emerald-300 bg-emerald-50 shadow-md">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white px-5 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
+              ✦ FREE PLAN ✦
             </div>
-          ))}
+
+            <div className="flex items-center gap-4 mb-5 mt-2">
+              <div className="w-12 h-12 rounded-xl bg-emerald-600 flex items-center justify-center shadow-md">
+                <span className="text-2xl">🎁</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-extrabold text-slate-900">Gold Plan – Free</h3>
+                <p className="text-slate-500 text-sm">Early seller benefit – no payment required</p>
+              </div>
+              <div className="ml-auto text-right">
+                <span className="text-3xl font-extrabold text-emerald-600">$0</span>
+                <span className="text-slate-400 text-sm block line-through">$160/month</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {GOLD_PLAN.features.map((f, i) => (
+                <div key={i} className="flex items-center text-slate-700 text-sm">
+                  <FiCheck className="w-4 h-4 text-emerald-600 mr-2 flex-shrink-0" />
+                  {f}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {subscriptionStatus && (
+            <p className="text-center text-sm text-slate-500">
+              Only <span className="font-bold text-orange-600">{subscriptionStatus.remainingSlots}</span> free slot{subscriptionStatus.remainingSlots !== 1 ? "s" : ""} remaining — claim yours now!
+            </p>
+          )}
         </div>
-      </div>
+      ) : (
+        /* ── Paid Plans ────────────────────────────────────────────────── */
+        <div className="space-y-4">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-slate-800">Choose Your Plan</h2>
+            <p className="text-slate-500 mt-1">Select a billing period that works for you</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {PAID_PLANS.map((plan) => (
+              <button
+                key={plan.id}
+                type="button"
+                onClick={() => setPaidPlanCycle(plan.cycle)}
+                className={`relative flex flex-col items-center py-6 px-4 rounded-2xl border-2 font-medium transition-all ${
+                  paidPlanCycle === plan.cycle
+                    ? "border-indigo-600 bg-indigo-50 shadow-lg ring-2 ring-indigo-200"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:shadow-md"
+                }`}
+              >
+                {plan.save && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs bg-emerald-500 text-white px-3 py-1 rounded-full font-bold whitespace-nowrap">
+                    {plan.save}
+                  </span>
+                )}
+                <span className="text-lg font-bold text-slate-800">{plan.label}</span>
+                <span className="text-3xl font-extrabold text-indigo-700 mt-2">
+                  ${plan.price}
+                </span>
+                <span className="text-sm text-slate-500">{plan.period}</span>
+                {paidPlanCycle === plan.cycle && (
+                  <FiCheck className="w-5 h-5 text-indigo-600 mt-2" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Gold plan features */}
+          <div className="relative p-6 rounded-2xl border-2 border-indigo-200 bg-indigo-50 shadow-md">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-700 text-white px-5 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
+              ✦ GOLD PLAN ✦
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3">
+              {GOLD_PLAN.features.map((f, i) => (
+                <div key={i} className="flex items-center text-slate-700 text-sm">
+                  <FiCheck className="w-4 h-4 text-indigo-600 mr-2 flex-shrink-0" />
+                  {f}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -1004,7 +1043,7 @@ const Register = () => {
   // ─────────────────────────────────────────────────────────────────────────
   const renderStep4 = () => {
     const price = getPrice();
-    const isFree = price === 0;
+    const isFree = price === 0 || isFreeEarlySeller;
 
     return (
       <div className="space-y-6">
@@ -1018,14 +1057,20 @@ const Register = () => {
             </div>
             <div className="flex justify-between">
               <span className="text-slate-600">Plan</span>
-              <span className="font-medium">
-                {PLANS.find((p) => p.id === selectedPlan)?.name}
-              </span>
+              <span className="font-medium">Gold</span>
             </div>
             <div className="flex justify-between">
               <span className="text-slate-600">Billing</span>
-              <span className="font-medium">{billingLabel()}</span>
+              <span className="font-medium">
+                {isFreeEarlySeller ? "Free (Early Seller)" : (PAID_PLANS.find((p) => p.cycle === paidPlanCycle)?.label || "Monthly")}
+              </span>
             </div>
+            {isFreeEarlySeller && (
+              <div className="flex justify-between text-emerald-700">
+                <span>🎁 Early Seller Discount</span>
+                <span className="font-bold">-100%</span>
+              </div>
+            )}
             <div className="border-t pt-3 mt-2 flex justify-between">
               <span className="font-semibold text-slate-800">Total</span>
               <span className="text-2xl font-bold text-slate-900">
@@ -1036,19 +1081,23 @@ const Register = () => {
         </div>
 
         {isFree ? (
-          /* Revenue-share – no payment needed */
+          /* Free early seller – no payment needed */
           <div className="space-y-4">
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center text-2xl">
-                  🚀
+                <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-2xl">
+                  🎉
                 </div>
                 <div>
                   <p className="font-bold text-slate-900">
-                    Revenue Share Plan – No Upfront Cost!
+                    {isFreeEarlySeller
+                      ? "Early Seller Offer – FREE Subscription!"
+                      : "Revenue Share Plan – No Upfront Cost!"}
                   </p>
                   <p className="text-sm text-slate-600">
-                    You pay 10% commission only when you earn.
+                    {isFreeEarlySeller
+                      ? "You're one of the first 15 sellers — no payment required."
+                      : "You pay 10% commission only when you earn."}
                   </p>
                 </div>
               </div>
@@ -1115,7 +1164,7 @@ const Register = () => {
                     </code>
                     :<br />
                     <code className="bg-red-100 px-1 rounded text-xs">
-                      VITE_STRIPE_PUBLISHABLE_KEY=pk_test_…
+                      VITE_STRIPE_PUBLIC_KEY=pk_test_…
                     </code>
                   </li>
                   <li>
