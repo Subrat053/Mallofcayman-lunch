@@ -58,15 +58,13 @@ const Marketing = () => {
                             <p className="text-slate-500 text-sm leading-relaxed">Story highlights & carousel posts</p>
                         </div>
 
-                        {/* TikTok */}
+                        {/* YouTube */}
                         <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 group">
-                            <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:bg-slate-200 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" className="text-slate-800" viewBox="0 0 16 16">
-                                    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
-                                </svg>
+                            <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:bg-red-100 transition-colors">
+                                <img src="/youtube-logo.png" alt="YouTube Logo" className="w-10 h-10 scale-125" />
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900 mb-2">TikTok</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed">Viral product trends & seasonal campaigns</p>
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">YouTube</h3>
+                            <p className="text-slate-500 text-sm leading-relaxed">Product demos, tutorials & behind-the-scenes</p>
                         </div>
                     </div>
                 </div>
