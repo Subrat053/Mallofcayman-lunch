@@ -32,7 +32,7 @@ const Marketing = () => {
                     </h2>
                     <div className="w-12 h-1 bg-amber-500 mx-auto rounded-full mb-5"></div>
                     <p className="text-base md:text-lg text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
-                        Mall of Cayman actively markets our vendors across <strong className="text-slate-800">Facebook, Instagram, and TikTok</strong> every month through vendor spotlights, product highlights, and seasonal campaigns.
+                        Mall of Cayman actively markets our vendors across <strong className="text-slate-800">Facebook, Instagram, and Youtube</strong> every month through vendor spotlights, product highlights, and seasonal campaigns.
                     </p>
 
                     <div className="grid sm:grid-cols-3 gap-6">
