@@ -241,7 +241,7 @@ const Testimonial = () => {
             </div>
 
             {/* Billing cycle toggles */}
-            <div className={`grid ${isEarlySellerFree ? "grid-cols-1 sm:grid-cols-1" : "grid-cols-2"} grid-cols-2 sm:grid-cols-4 gap-3 mb-10 max-w-2xl mx-auto`}>
+            <div className={`grid ${isEarlySellerFree ? "grid-cols-1 sm:grid-cols-1" : "grid-cols-2 sm:grid-cols-4"} gap-3 mb-10 max-w-2xl mx-auto`}>
               {billingOptions.map((c) => (
                 <button
                   key={c.value}
